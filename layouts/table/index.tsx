@@ -1,0 +1,1 @@
+export {HandleTable} from './handle-table';
