@@ -1,8 +1,6 @@
 import type {ReactNode} from 'react';
 import {useEffect} from 'react';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Drawer from '@mui/material/Drawer';
+import {Box, Drawer, Stack, ListItem, ListItemText, ListItemIcon} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import {alpha, useTheme} from '@mui/material/styles';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -12,7 +10,7 @@ import {Logo} from '@components/logo';
 import {Scrollbar} from '@components/scrollbar';
 import {RouterLink} from "@components/routes";
 import type {UsersInterface} from "@components/interface";
-import {NAV} from './config-layout';
+import {DRAWER_WIDTH} from '@components/constants';
 import {navConfig} from './config-navigation';
 
 export function Nav({openNav, onCloseNav, user}: {
@@ -28,7 +26,10 @@ export function Nav({openNav, onCloseNav, user}: {
     if (openNav) {
       onCloseNav();
     }
-  }, [onCloseNav, openNav, pathname]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- works fine like this
+  }, [pathname]);
+
+
 
   const renderAccount = (
     <Box
@@ -79,7 +80,8 @@ export function Nav({openNav, onCloseNav, user}: {
         },
       }}
     >
-      <Logo sx={{mt: 3, ml: 4}}/>
+      <Box mt={4} />
+      <Logo />
 
       {renderAccount}
 
@@ -95,7 +97,7 @@ export function Nav({openNav, onCloseNav, user}: {
     <Box
       sx={{
         flexShrink: {lg: 0},
-        width: {lg: NAV.WIDTH},
+        width: {lg: DRAWER_WIDTH},
       }}
     >
 
@@ -104,7 +106,7 @@ export function Nav({openNav, onCloseNav, user}: {
           sx={{
             height: 1,
             position: 'fixed',
-            width: NAV.WIDTH,
+            width: DRAWER_WIDTH,
             borderRight: `dashed 1px ${theme.palette.divider}`,
           }}
         >
@@ -114,7 +116,7 @@ export function Nav({openNav, onCloseNav, user}: {
         <Drawer
           PaperProps={{
             sx: {
-              width: NAV.WIDTH,
+              width: DRAWER_WIDTH,
             },
           }}
           onClose={onCloseNav}
@@ -139,7 +141,8 @@ function NavItem({item}: {
   const active = item.path === pathname;
 
   return (
-    <ListItemButton
+    <ListItem>
+      <ListItemButton
       component={RouterLink}
       href={item.path}
       sx={{
@@ -159,11 +162,12 @@ function NavItem({item}: {
         }),
       }}
     >
-      <Box component="span" sx={{width: 24, height: 24, mr: 2}}>
-        {item.icon}
-      </Box>
 
-      <Box component="span">{item.title} </Box>
+      <ListItemIcon sx={{width: 24, height: 24}}>
+        {item.icon}
+      </ListItemIcon>
+      <ListItemText primary={item.title}/>
     </ListItemButton>
+    </ListItem>
   );
 }

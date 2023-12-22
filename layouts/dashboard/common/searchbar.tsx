@@ -69,7 +69,7 @@ export function Searchbar({theme}:{theme: Theme}): ReactNode {
               }
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
             />
-            <Button onClick={handleIsOpen} variant="contained">
+            <Button color="inherit" onClick={handleIsOpen} variant="contained">
               Search
             </Button>
           </StyledSearchbar>

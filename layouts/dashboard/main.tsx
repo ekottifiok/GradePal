@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container'
 import {useResponsive} from '@components/hooks/use-responsive';
 import Loading from '@app/loading';
-import {HEADER, NAV} from './config-layout';
+import {HEADER, DRAWER_WIDTH} from '@components/constants';
 
 const SPACING = 8;
 
@@ -28,7 +28,7 @@ export function Main({children, sx, ...other}: Main): ReactNode {
         ...(lgUp && {
           px: 2,
           py: `${HEADER.H_DESKTOP + SPACING}px`,
-          width: `calc(100% - ${NAV.WIDTH}px)`,
+          width: `calc(100% - ${DRAWER_WIDTH}px)`,
         }),
         ...sx,
       }}

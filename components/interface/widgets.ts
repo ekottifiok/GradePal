@@ -14,7 +14,7 @@ export interface CurrentSubjectWidgets {
   title: string;
 }
 
-export interface ConversionRatesWidget {
+export interface BestStudentsWidget {
   chart: {
     labels?: string[];
     colors?: any[];

@@ -5,6 +5,7 @@ export type {
   UnknownRecord,
   UseChartReturnType
 } from './chart'
+export type {NavConfig} from './dashboard'
 export type {FormAlert} from './form-alert';
 export {AllModelsEnum, NotificationType, ReportOptions} from './models'
 export type {
@@ -46,7 +47,7 @@ export type {
   Theme,
 } from './theme'
 export type {
-  ConversionRatesWidget,
+  BestStudentsWidget,
   CurrentSubjectWidgets,
   WebsiteVisitsWidget,
   WidgetsRawData,

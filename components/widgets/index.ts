@@ -1,4 +1,4 @@
-export {ConversionRates} from './conversion-rates';
+export {BestStudents} from './best-students';
 export {CurrentSubject} from './current-subject';
 export {CurrentVisits} from './current-visits'
 export {WebsiteVisits} from './website-visits';

@@ -7,9 +7,9 @@ import type { ReactNode } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { fNumber } from '@components/utils/format-number';
 import { Chart, useChart } from '@components/chart';
-import type {ConversionRatesWidget} from "@components/interface";
+import type {BestStudentsWidget} from "@components/interface";
 
-export function ConversionRates({ title, subheader, chart, ...other }: ConversionRatesWidget ): ReactNode {
+export function BestStudents({ title, subheader, chart, ...other }: BestStudentsWidget ): ReactNode {
   const { colors, series, options } = chart;
   
   const chartOptions = useChart({
@@ -43,6 +43,7 @@ export function ConversionRates({ title, subheader, chart, ...other }: Conversio
       <Box sx={{ mx: 3 }}>
         <Chart
           dir="ltr"
+          height={364}
           options={chartOptions}
           series={[{ data: series.map((i) => i.value) }]}
           theme={useTheme()}

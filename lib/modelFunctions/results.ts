@@ -112,7 +112,7 @@ export async function createArrayOfResults(
               // @ts-expect-error -- according to mongoose documentation this is fine
               document: {
                 name, department, matriculationNumber,
-                picture: `/assets/images/avatars/avatar_${Math.floor(Math.random() * 25)}.jpg`
+                picture: `images/avatars/avatar_${Math.floor(Math.random() * 25)}.jpg`
               }
             }
           })

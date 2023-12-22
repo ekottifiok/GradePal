@@ -4,7 +4,7 @@ import type {ReactNode} from 'react';
 import { Box } from '@mui/material'
 import {alpha, useTheme} from '@mui/material/styles'
 import { BgGradient } from '@components/theme/css';
-import bgImage from '@public/assets/background/overlay_4.jpg'
+import {imagePath} from "@components/utils";
 
 // eslint-disable-next-line import/no-default-export -- this is needed in Next.js documentation
 export default function Loading(): ReactNode {
@@ -19,7 +19,7 @@ export default function Loading(): ReactNode {
         width: "inherit",
         ...BgGradient({
           color: alpha(theme.palette.background.default, 0.7),
-          imageData: bgImage
+          imageData: imagePath.concat('background/overlay_4.jpg')
         }),
       }}
     >

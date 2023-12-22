@@ -6,8 +6,8 @@ import {BgBlur} from '@components/theme/css';
 import type {UsersInterface, Theme} from "@components/interface";
 import {Logout as LogoutButton} from "@components/buttons";
 import {Iconify} from '@components/iconify';
+import {HEADER, DRAWER_WIDTH} from '@components/constants';
 import {AccountPopover, LanguagePopover, NotificationsPopover, Searchbar,} from './common';
-import {HEADER, NAV} from './config-layout';
 
 export function Header({onOpenNav, user}: {
   onOpenNav: () => void,
@@ -28,7 +28,7 @@ export function Header({onOpenNav, user}: {
           duration: theme.transitions.duration.shorter,
         }),
         ...(lgUp && {
-          width: `calc(100% - ${NAV.WIDTH + 1}px)`,
+          width: `calc(100% - ${DRAWER_WIDTH + 1}px)`,
           height: HEADER.H_DESKTOP,
         }),
       }}
@@ -48,7 +48,6 @@ export function Header({onOpenNav, user}: {
         <Searchbar theme={theme}/>
 
         <Box sx={{flexGrow: 1}}/>
-
 
         <Stack alignItems="center" direction="row" spacing={1}>
           <LogoutButton/>

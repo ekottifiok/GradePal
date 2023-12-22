@@ -7,6 +7,8 @@ module.exports = {
   extends: [
     "next",
     "next/core-web-vitals",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react",
     "prettier",
     require.resolve('@vercel/style-guide/eslint/node'),
     require.resolve('@vercel/style-guide/eslint/react'),

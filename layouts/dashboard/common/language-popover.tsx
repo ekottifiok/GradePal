@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper'
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import {imagePath} from "@components/utils/image-path";
+import {imagePath} from "@components/utils";
 
 // ----------------------------------------------------------------------
 

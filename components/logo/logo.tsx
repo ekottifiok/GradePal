@@ -1,7 +1,8 @@
 import {forwardRef} from 'react';
-import {Box} from '@mui/material';
+import {Box, Link, Stack, Typography} from '@mui/material';
 import {useTheme} from '@mui/material/styles';
-import Link from 'next/link';
+import {RouterLink} from '@components/routes'
+
 
 // ----------------------------------------------------------------------
 
@@ -69,8 +70,17 @@ export const Logo = forwardRef<HTMLButtonElement, Logo>(
     );
 
     return disabledLink ? logo : (
-      <Link href='/'>
-        {logo}
+      <Link component={RouterLink} href='/' underline="none">
+        <Stack direction='row' gap={2} sx={{
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          {logo}
+
+            <Typography sx={{textDecoration: 'none'}} variant='h6'>
+              GradePal
+            </Typography>
+        </Stack>
       </Link>
     )
   });

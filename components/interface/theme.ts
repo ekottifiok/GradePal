@@ -11,20 +11,19 @@ import type {
   TypographyOptions as MUITypographyOptions
 } from "@mui/material/styles/createTypography";
 import type {CSSProperties} from "react";
-import type {StaticImageData} from "next/image";
 
 export interface BgBlurInterface {
   color?: string;
   blur?: number;
   opacity?: number;
-  imageData?: StaticImageData;
+  imgUrl?: string;
 }
 
 export interface BgGradientInterface {
   direction?: string;
   startColor?: string;
   endColor?: string;
-  imageData?: StaticImageData;
+  imgUrl?: string;
   color?: string;
 }
 

@@ -5,6 +5,7 @@ import { menuItemClasses } from '@mui/material/MenuItem';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
 import type { Fontface } from '@mui/material/styles/createTypography';
 import type { BgBlurInterface, BgGradientInterface, PaperInterface, Theme } from '@components/interface';
+import {imagePath} from "@components/utils";
 
 export const Paper = ({ bgcolor, dropdown }: PaperInterface): {
   elevation?: number;
@@ -108,11 +109,11 @@ export function BgBlur(props?: BgBlurInterface): {
   const color = props?.color || theme.palette.background.default;
   const blur = props?.blur || 6;
   const opacity = props?.opacity || 0.8;
-  const imageData = props?.imageData;
+  const imgUrl = props?.imgUrl;
 
-  return imageData ? {
+  return imgUrl ? {
     position: 'relative',
-    backgroundImage: `url(${imageData.src})`,
+    backgroundImage: `url(${imagePath}${imgUrl})`,
     '&:before': {
       position: 'absolute',
       top: 0,
@@ -143,13 +144,13 @@ export function BgGradient(props: BgGradientInterface): {
   const direction = props.direction || 'to bottom';
   const startColor = props.startColor;
   const endColor = props.endColor;
-  const imageData = props.imageData;
+  const imgUrl = props?.imgUrl;
   const color = props.color;
 
-  if (imageData) {
+  if (imgUrl) {
     return {
       background: `linear-gradient(${direction}, ${startColor || color}, ${endColor || color
-        }), url(${imageData.src})`,
+        }), url(${imagePath}${imgUrl})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',

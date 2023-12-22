@@ -1,14 +1,15 @@
 "use client"
 import {Container, Grid,} from '@mui/material'
 import type {ReactNode} from "react";
-import {ConversionRates, CurrentSubject, WidgetSummary} from '@components/widgets'
+import {BestStudents, CurrentSubject, WidgetSummary} from '@components/widgets'
 import type {UsersInterface} from "@components/interface";
+import {imagePath} from "@components/utils";
 
 interface Parameters {
   user: UsersInterface
 }
 
-export function StaffPage({}: Parameters): ReactNode {
+export function StaffPage({user}: Parameters): ReactNode {
 
   return (
     <Container maxWidth="xl">
@@ -17,7 +18,7 @@ export function StaffPage({}: Parameters): ReactNode {
       <Grid container spacing={3}>
         <Grid item md={3} sm={6} xs={12}>
           <WidgetSummary
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png"/>}
+            icon={<img alt="icon" src={imagePath.concat("icons/glass/ic_glass_bag.png")}/>}
             title="Weekly Sales"
             total={714000}
           />
@@ -25,7 +26,7 @@ export function StaffPage({}: Parameters): ReactNode {
 
         <Grid item md={3} sm={6} xs={12}>
           <WidgetSummary
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png"/>}
+            icon={<img alt="icon" src={imagePath.concat("icons/glass/ic_glass_users.png")}/>}
             title="Students"
             total={1352831}
           />
@@ -33,7 +34,7 @@ export function StaffPage({}: Parameters): ReactNode {
 
         <Grid item md={3} sm={6} xs={12}>
           <WidgetSummary
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png"/>}
+            icon={<img alt="icon" src={imagePath.concat("icons/glass/ic_glass_users.png")}/>}
             title="Staffs"
             total={1352831}
           />
@@ -45,7 +46,7 @@ export function StaffPage({}: Parameters): ReactNode {
         <Grid item lg={4} md={6} xs={12}/>
 
         <Grid item lg={8} md={6} xs={12}>
-          <ConversionRates
+          <BestStudents
             chart={{
               series: [
                 {label: 'Italy', value: 400},
