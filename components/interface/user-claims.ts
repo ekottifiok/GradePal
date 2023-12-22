@@ -1,4 +1,4 @@
-import {Claims} from "@auth0/nextjs-auth0";
+import type {Claims} from "@auth0/nextjs-auth0";
 
 export interface UserClaims extends Claims {
   given_name: string;

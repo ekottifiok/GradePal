@@ -3,9 +3,7 @@ import type { Document, MergeType, Schema } from "mongoose";
 
 export enum ReportOptions {
   Created = 'Created',
-  Updated = 'Updated',
   Error = 'Error',
-  Igonored = 'Ignored'
 }
 
 export enum NotificationType {
