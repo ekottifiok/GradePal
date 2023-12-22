@@ -1,12 +1,12 @@
 import type {ReactNode} from "react";
 import {SvgColor} from '@components/svg-color';
-import {imagePath} from "@components/utils";
+import {IMAGE_PATH} from "@components/constants";
 import type {NavConfig} from "@components/interface";
 
 // ----------------------------------------------------------------------
 
 const icon = (name: string): ReactNode => (
-  <SvgColor src={`${imagePath}icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
+  <SvgColor src={IMAGE_PATH.concat(`icons/navbar/${name}.svg`)} sx={{ width: 1, height: 1 }} />
 );
 
 export const navConfig: NavConfig[] = [

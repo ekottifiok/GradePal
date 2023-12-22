@@ -2,7 +2,7 @@ import {AppBar, Box, IconButton, Stack, Toolbar,} from '@mui/material';
 import {useTheme} from '@mui/material/styles';
 import type {ReactNode} from "react";
 import {useResponsive} from '@components/hooks/use-responsive';
-import {BgBlur} from '@components/theme/css';
+import {BgBlur} from '@components/theme';
 import type {UsersInterface, Theme} from "@components/interface";
 import {Logout as LogoutButton} from "@components/buttons";
 import {Iconify} from '@components/iconify';

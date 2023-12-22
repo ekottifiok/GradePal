@@ -3,7 +3,7 @@ import {Container, Grid,} from '@mui/material'
 import type {ReactNode} from "react";
 import {BestStudents, CurrentSubject, WidgetSummary} from '@components/widgets'
 import type {UsersInterface} from "@components/interface";
-import {imagePath} from "@components/utils";
+import {IMAGE_PATH} from "@components/constants";
 
 interface Parameters {
   user: UsersInterface
@@ -18,7 +18,7 @@ export function StaffPage({user}: Parameters): ReactNode {
       <Grid container spacing={3}>
         <Grid item md={3} sm={6} xs={12}>
           <WidgetSummary
-            icon={<img alt="icon" src={imagePath.concat("icons/glass/ic_glass_bag.png")}/>}
+            icon={<img alt="icon" src={IMAGE_PATH.concat("icons/glass/ic_glass_bag.png")}/>}
             title="Weekly Sales"
             total={714000}
           />
@@ -26,7 +26,7 @@ export function StaffPage({user}: Parameters): ReactNode {
 
         <Grid item md={3} sm={6} xs={12}>
           <WidgetSummary
-            icon={<img alt="icon" src={imagePath.concat("icons/glass/ic_glass_users.png")}/>}
+            icon={<img alt="icon" src={IMAGE_PATH.concat("icons/glass/ic_glass_users.png")}/>}
             title="Students"
             total={1352831}
           />
@@ -34,7 +34,7 @@ export function StaffPage({user}: Parameters): ReactNode {
 
         <Grid item md={3} sm={6} xs={12}>
           <WidgetSummary
-            icon={<img alt="icon" src={imagePath.concat("icons/glass/ic_glass_users.png")}/>}
+            icon={<img alt="icon" src={IMAGE_PATH.concat("icons/glass/ic_glass_users.png")}/>}
             title="Staffs"
             total={1352831}
           />

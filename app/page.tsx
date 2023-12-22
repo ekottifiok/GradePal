@@ -5,6 +5,7 @@ import type {ReactNode} from "react";
 import { GetStarted } from '@components/buttons/get-started';
 import { useResponsive } from '@components/hooks';
 import {Redirect} from "@components/utils";
+import {IMAGE_PATH} from "@components/constants";
 import Loading from './loading';
 
 // eslint-disable-next-line import/no-default-export -- next js requires this
@@ -52,7 +53,7 @@ export default function Page(): ReactNode {
 
       <img
         alt='Black boy reading a book'
-        src={"assets/background/black_boy_reading.png"}
+        src={IMAGE_PATH.concat("background/black_boy_reading.png")}
         style={{
           height: "100", width: "100", objectFit: 'cover',
         }}

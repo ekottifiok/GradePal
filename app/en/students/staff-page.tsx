@@ -96,7 +96,7 @@ export function StaffPage({students}: {
 
   const [formData, setFormData] = useState(initialFormData)
 
-  const handleFormData = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
+  const handleFormData = (event: ChangeEvent<HTMLInputElement>): void => {
     resetState()
     const {name, value} = event.target
     setFormData({...formData, [name]: value})

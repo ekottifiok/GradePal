@@ -21,11 +21,11 @@ import {alpha, useTheme} from '@mui/material/styles';
 import type {ChangeEvent, FormEvent, ReactNode, SyntheticEvent} from 'react';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
-import {BgGradient} from "@components/theme/css";
+import {BgGradient} from "@components/theme";
 import {Logo} from "@components/logo";
 import type {ResponseReply, UserClaims} from "@components/interface";
 import {TabPanel} from "@layouts/tab-panel";
-import bgImage from '@public/assets/background/overlay_4.jpg'
+import {IMAGE_PATH} from "@components/constants";
 
 // ----------------------------------------------------------------------
 
@@ -98,7 +98,9 @@ export function CSRPage({user}: {user: UserClaims}): ReactNode {
       const {message, error} = await res.json() as ResponseReply
 
       if (res.status === 201) {
-         message && setFormAlert({severity: 'success', content: message})
+         if (typeof message === 'string') {
+           message && setFormAlert({severity: 'success', content: message})
+         }
         setLoading(false)
         setTimeout(() => {
           router.push('/en')
@@ -120,7 +122,7 @@ export function CSRPage({user}: {user: UserClaims}): ReactNode {
       sx={{
         ...BgGradient({
           color: alpha(theme.palette.background.default, 0.9),
-          imageData: bgImage,
+          imgUrl: IMAGE_PATH.concat('background/overlay_4.jpg'),
         }),
         height: 1,
       }}

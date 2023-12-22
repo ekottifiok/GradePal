@@ -9,3 +9,5 @@ export const HEADER = {
   H_DESKTOP: 80,
   H_DESKTOP_OFFSET: 80 - 16,
 };
+
+export const IMAGE_PATH = 'https://pub-8d466ef76e76487fb73666e501ae049b.r2.dev/'

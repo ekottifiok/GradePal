@@ -1,6 +1,6 @@
 import {getSession, withApiAuthRequired} from '@auth0/nextjs-auth0';
 import type {NextRequest} from 'next/server';
-import { NextResponse} from 'next/server';
+import {NextResponse} from 'next/server';
 import {createCourse, deleteCourse, getAllCourses, modifyCourse} from '@lib/modelFunctions';
 import type {ResponseReply} from "@components/interface";
 import {getUserAuth0} from "@components/utils/get-user-auth0";
@@ -10,7 +10,8 @@ export const GET = async (_req: NextRequest, _res: NextResponse): Promise<NextRe
   return NextResponse.json({message: "hello", extra: JSON.stringify(hello)})
 }
 
-export const DELETE = withApiAuthRequired(async (req): Promise<NextResponse<ResponseReply>> => (
+export const DELETE = withApiAuthRequired(
+  async (req): Promise<NextResponse<ResponseReply>> => (
   Promise.all([req.json(), getUserAuth0(getSession(req, new NextResponse()))])
     .then(([inputData, user]) => {
       const {id} = inputData as {
@@ -18,11 +19,8 @@ export const DELETE = withApiAuthRequired(async (req): Promise<NextResponse<Resp
       };
       if (!id) {
         return NextResponse.json<ResponseReply>(
-          {
-            error: {
-              FormDataFailure: "Form not filled completely"
-            }
-          }, {status: 500}
+          {error: {FormDataFailure: "Form not filled completely"}},
+          {status: 500}
         )
       }
 
@@ -45,7 +43,8 @@ export const DELETE = withApiAuthRequired(async (req): Promise<NextResponse<Resp
     })
 ))
 
-export const PATCH = withApiAuthRequired(async (req): Promise<NextResponse<ResponseReply>> => {
+export const PATCH = withApiAuthRequired(
+  async (req): Promise<NextResponse<ResponseReply>> => {
   return Promise.all([req.json(), getUserAuth0(getSession(req, new NextResponse()))])
     .then(([inputData, user]) => {
       const {id, courseCode, creditUnit, title} = inputData as {
@@ -77,24 +76,16 @@ export const POST = withApiAuthRequired(async (req) => (
       }
       const creditUnitInt = creditUnit ? parseInt(creditUnit, 10) : undefined;
       if (!courseCode || !creditUnit || !title || !creditUnitInt) {
-        return NextResponse.json(
-          {
-            message: {
-              error: {
-                FormDataFailure: "Form not filled completely"
-              }
-            }
-          }, {status: 500}
+        return NextResponse.json<ResponseReply>(
+          {error: {FormDataFailure: "Form not filled completely"}},
+          {status: 500}
         )
       }
 
       if (!department) {
         return NextResponse.json(
-          {
-
-            error: {FormDataFailure: "Department lacking on your information"}
-
-          }, {status: 500}
+          {error: {FormDataFailure: "Department lacking on your information"}},
+          {status: 500}
         )
       }
 
@@ -107,9 +98,7 @@ export const POST = withApiAuthRequired(async (req) => (
         }, {status: 201}))
         .catch((error) => NextResponse.json<ResponseReply>(
           {
-            error: {
-              DatabaseError: "Failed to create course",
-            },
+            error: {DatabaseError: "Failed to create course"},
             extra: error as never
           }, {status: 500}
         ));

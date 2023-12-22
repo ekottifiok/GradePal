@@ -87,7 +87,9 @@ export function StaffPage({ courses }: {
       setLoading(false)
       const { message } = await res.json() as ResponseReply;
       if (res.status === 201) {
-        message && setFormAlert({ severity: 'success', content: message });
+        if (typeof message === 'string') {
+          message && setFormAlert({ severity: 'success', content: message });
+        }
         closeDialog()
       } else {
         setFormAlert({

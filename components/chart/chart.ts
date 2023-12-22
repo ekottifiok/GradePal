@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import dynamic from "next/dynamic";
 import { alpha, styled } from '@mui/material/styles';
-import { BgBlur } from '@components/theme/css';
+import { BgBlur } from '@components/theme';
 import type {Theme} from '@components/interface'
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });

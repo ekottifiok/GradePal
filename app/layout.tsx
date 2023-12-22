@@ -9,6 +9,7 @@ import {
 } from '@mui/material/styles';
 import {ThemeProvider} from '@components/theme';
 import {EdgeStoreProvider} from '@components/edgeStore';
+import {IMAGE_PATH} from "@components/constants";
 
 
 // eslint-disable-next-line import/no-default-export -- required by next js
@@ -16,14 +17,14 @@ export default function RootLayout({children}: { children: ReactNode }): ReactNo
   return (
     <html lang='en'>
     <head>
-      <link href='/favicon.ico' rel='icon' sizes='any'/>
-      <link href='/favicon-16x16.png' rel='icon'
+      <link href={IMAGE_PATH.concat('favicon/favicon.ico')} rel='icon' sizes='any'/>
+      <link href={IMAGE_PATH.concat('/favicon-16x16.png')} rel='icon'
             sizes='16x16'
             type='image/png'/>
-      <link href='/favicon-32x32.png' rel='icon'
+      <link href={IMAGE_PATH.concat('favicon/favicon-32x32.png')} rel='icon'
             sizes='32x32'
             type='image/png'/>
-      <link href='/app/apple-icon.png'
+      <link href={IMAGE_PATH.concat('/app/apple-icon.png')}
             rel='apple-touch-icon'
             sizes='180x180'
             type='image/png'/>

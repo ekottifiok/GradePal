@@ -1,1 +1,0 @@
-export const imagePath = 'https://pub-8d466ef76e76487fb73666e501ae049b.r2.dev/'

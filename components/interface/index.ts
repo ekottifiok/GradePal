@@ -4,8 +4,8 @@ export type {
   LabelTotal,
   UnknownRecord,
   UseChartReturnType
-} from './chart'
-export type {NavConfig} from './dashboard'
+} from './chart';
+export type {NavConfig} from './dashboard';
 export type {FormAlert} from './form-alert';
 export {AllModelsEnum, NotificationType, ReportOptions} from './models'
 export type {

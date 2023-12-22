@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper'
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import {imagePath} from "@components/utils";
+import {IMAGE_PATH} from "@components/constants";
 
 // ----------------------------------------------------------------------
 
@@ -13,17 +13,17 @@ const LANGUAGES = [
   {
     value: 'en',
     label: 'English',
-    icon: `${imagePath}icons/ic_flag_ng.svg`,
+    icon: IMAGE_PATH.concat('icons/ic_flag_ng.svg'),
   },
   {
     value: 'de',
     label: 'German',
-    icon: `${imagePath}icons/ic_flag_de.svg`,
+    icon: IMAGE_PATH.concat('icons/ic_flag_de.svg'),
   },
   {
     value: 'fr',
     label: 'French',
-    icon: `${imagePath}icons/ic_flag_fr.svg`,
+    icon: IMAGE_PATH.concat('icons/ic_flag_fr.svg'),
   },
 ];
 

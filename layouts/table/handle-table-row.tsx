@@ -33,7 +33,8 @@ import type {
 } from "@components/interface";
 import { AllModelsEnum, ExtendedModelEnum } from '@components/interface'
 import { Iconify } from "@components/iconify";
-import { fToNow, imagePath } from "@components/utils";
+import {IMAGE_PATH} from "@components/constants";
+import { fToNow } from "@components/utils";
 
 interface Parameters {
   selected: boolean;
@@ -267,7 +268,7 @@ function Logic(
           {
             key: 0, content: (
               <Stack alignItems="center" direction="row" spacing={2}>
-                <Avatar alt={data.name} src={imagePath.concat(data.picture || 'images/avatar/avatar_1.jpg')} />
+                <Avatar alt={data.name} src={IMAGE_PATH.concat(data.picture || 'images/avatar/avatar_1.jpg')} />
                 <Typography noWrap variant="subtitle2">
                   {data.name}
                 </Typography>

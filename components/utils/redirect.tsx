@@ -2,7 +2,7 @@
 import type {ReactNode} from "react";
 import { useEffect} from "react";
 import {useRouter} from "next/navigation";
-import Loading from '@app/loading';
+import {Loader} from '@components/loader'
 
 export function Redirect({to}: {to: string}): ReactNode {
   const router = useRouter()
@@ -10,5 +10,5 @@ export function Redirect({to}: {to: string}): ReactNode {
     router.push(to);
   }, [router, to]);
 
-  return <Loading />
+  return <Loader />
 }
