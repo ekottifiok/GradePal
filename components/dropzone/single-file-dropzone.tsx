@@ -11,6 +11,7 @@ import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
 import * as React from "react";
 import Button from "@mui/material/Button";
+import {ProgressState} from "@components/interface";
 
 const variants = {
   base: 'relative rounded-md p-4 w-96 max-w-[calc(100vw-1rem)] flex justify-center items-center flex-col cursor-pointer border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out',
@@ -20,12 +21,6 @@ const variants = {
   accept: 'border border-blue-500 bg-blue-500 bg-opacity-10',
   reject: 'border border-red-700 bg-red-700 bg-opacity-10',
 };
-
-enum ProgressState {
-  PENDING= 'PENDING' , 
-  COMPLETE= 'COMPLETE' , 
-  ERROR= 'ERROR',
-}
 
 export interface FileState {
   file: File;

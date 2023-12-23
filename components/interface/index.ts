@@ -6,6 +6,7 @@ export type {
   UseChartReturnType
 } from './chart';
 export type {NavConfig} from './dashboard';
+export {ProgressState} from './dropzone'
 export type {FormAlert} from './form-alert';
 export {AllModelsEnum, NotificationType, ReportOptions} from './models'
 export type {

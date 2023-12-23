@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-misused-promises -- need to use async function */
+// noinspection JSUnusedGlobalSymbols
+
 "use client"
-import type { SelectChangeEvent } from "@mui/material";
-import type { ReactNode } from 'react';
-import React, { useState } from 'react';
+import type {SelectChangeEvent} from "@mui/material";
 import {
   Alert,
   AlertTitle,
@@ -19,14 +20,16 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { Iconify } from '@components/iconify';
-import { HandleTable } from '@layouts/table';
-import type { FormAlert, ResultsInterface} from "@components/interface";
-import {AllModelsEnum} from "@components/interface";
-import { useEdgeStore } from '@components/edgeStore';
-import type { FileState } from "@components/dropzone";
-import { SingleFileDropzone } from "@components/dropzone";
-import { populateSession } from '@components/populate'
+import type {ReactNode} from 'react';
+import React, {useState} from 'react';
+import {Iconify} from '@components/iconify';
+import {HandleTable} from '@layouts/table';
+import type {FormAlert, ResultsInterface} from "@components/interface";
+import {AllModelsEnum, ProgressState} from "@components/interface";
+import {useEdgeStore} from '@components/edgeStore';
+import type {FileState} from "@components/dropzone";
+import {SingleFileDropzone} from "@components/dropzone";
+import {populateSession} from '@components/populate'
 
 interface FormDataType {
   session: string | null;
@@ -80,7 +83,7 @@ export function StaffPage({ results }: {results: ResultsInterface[]}): ReactNode
                 // wait 1 second to set it to complete
                 // so that the user can see the progress bar at 100%
                 setTimeout(() => {
-                  updateFileProgress(addedFileState.key, 'COMPLETE');
+                  updateFileProgress(addedFileState.key, ProgressState.COMPLETE);
 
                 },
                   1000);
@@ -95,7 +98,7 @@ export function StaffPage({ results }: {results: ResultsInterface[]}): ReactNode
             })
             ;
         } catch (err) {
-          updateFileProgress(addedFileState.key, 'ERROR');
+          updateFileProgress(addedFileState.key, ProgressState.ERROR);
         }
       }),
     );
