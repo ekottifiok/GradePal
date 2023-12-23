@@ -60,7 +60,7 @@ export function StaffPage({students}: {
     }).then((res) => {
       const {message, error} = res.json() as unknown as ResponseReply;
       if (res.status === 201 || res.status === 200) {
-        if (message) {
+        if (typeof message === 'string') {
           setFormAlert({severity: "success", content: message});
         } else {
           closeDialog();
