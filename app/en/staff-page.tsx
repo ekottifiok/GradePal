@@ -2,18 +2,14 @@
 import {Container, Grid,} from '@mui/material'
 import type {ReactNode} from "react";
 import {BestStudents, CurrentSubject, WidgetSummary} from '@components/widgets'
-import type {UsersInterface} from "@components/interface";
 import {IMAGE_PATH} from "@components/constants";
 
-interface Parameters {
-  user: UsersInterface
-}
+export function StaffPage(): ReactNode {
 
-export function StaffPage({user}: Parameters): ReactNode {
+
 
   return (
     <Container maxWidth="xl">
-
 
       <Grid container spacing={3}>
         <Grid item md={3} sm={6} xs={12}>

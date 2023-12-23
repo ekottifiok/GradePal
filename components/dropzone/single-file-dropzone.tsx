@@ -4,10 +4,13 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import * as React from 'react';
+import type {ReactNode} from 'react';
+import { useMemo} from 'react';
 import {Stack, Typography} from '@mui/material'
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
+import * as React from "react";
+import Button from "@mui/material/Button";
 
 const variants = {
   base: 'relative rounded-md p-4 w-96 max-w-[calc(100vw-1rem)] flex justify-center items-center flex-col cursor-pointer border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out',
@@ -18,18 +21,24 @@ const variants = {
   reject: 'border border-red-700 bg-red-700 bg-opacity-10',
 };
 
+enum ProgressState {
+  PENDING= 'PENDING' , 
+  COMPLETE= 'COMPLETE' , 
+  ERROR= 'ERROR',
+}
+
 export interface FileState {
   file: File;
   key: string; // used to identify the file in the progress callback
-  progress: 'PENDING' | 'COMPLETE' | 'ERROR' | number;
+  progress: ProgressState | number;
 }
 
 interface InputProps {
   className?: string;
   value?: FileState[];
-  onChange?: (files: FileState[]) => void | Promise<void>;
-  onFilesAdded?: (addedFiles: FileState[]) => void | Promise<void>;
-  disabled?: boolean;
+  onChange?: (files: FileState[]) => void;
+  onFilesAdded?: (addedFiles: FileState[]) => void ;
+  disabledInput?: boolean;
   dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
 }
 
@@ -50,12 +59,13 @@ const ERROR_MESSAGES = {
 
 const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { dropzoneOptions, value, className, disabled, onFilesAdded, onChange },
+    { dropzoneOptions, value, className, disabledInput, onFilesAdded, onChange },
     ref,
   ) => {
     const [customError, setCustomError] = React.useState<string>();
+    let disabled = false;
     if (dropzoneOptions?.maxFiles && value?.length) {
-      disabled = disabled ?? value.length >= dropzoneOptions.maxFiles;
+      disabled = disabledInput ?? value.length >= dropzoneOptions.maxFiles;
     }
     // dropzone configuration
     const {
@@ -77,14 +87,15 @@ const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           setCustomError(ERROR_MESSAGES.tooManyFiles(dropzoneOptions.maxFiles));
           return;
         }
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- it's not always truthy
         if (files) {
           const addedFiles = files.map<FileState>((file) => ({
             file,
             key: Math.random().toString(36).slice(2),
-            progress: 'PENDING',
+            progress: ProgressState.PENDING,
           }));
-          void onFilesAdded?.(addedFiles);
-          void onChange?.([...(value ?? []), ...addedFiles]);
+          onFilesAdded?.(addedFiles);
+          onChange?.([...(value ?? []), ...addedFiles]);
         }
       },
       ...dropzoneOptions,
@@ -97,7 +108,7 @@ const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           variants.base,
           isFocused && variants.active,
           disabled && variants.disabled,
-          (isDragReject ?? fileRejections[0]) && variants.reject,
+          (isDragReject || fileRejections[0]) && variants.reject,
           isDragAccept && variants.accept,
           className,
         ).trim(),
@@ -112,7 +123,7 @@ const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
     );
 
     // error validation messages
-    const errorMessage = React.useMemo(() => {
+    const errorMessage = useMemo(() => {
       if (fileRejections[0]) {
         const { errors } = fileRejections[0];
         if (errors[0]?.code === 'file-too-large') {
@@ -127,6 +138,8 @@ const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
       }
       return undefined;
     }, [fileRejections, dropzoneOptions]);
+    
+
 
     return (
       <div>
@@ -162,10 +175,10 @@ const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           </div>
 
           {/* Selected Files */}
-          {value?.map(({ file, progress }, i) => (
+          {value?.map(({ file, progress, key }, i) => (
             <Stack
               // className="flex h-16 flex-col border-gray-300 px-4 py-2"
-              key={i}
+              key={key}
             >
               <Stack direction='row' gap={3} sx={{
                 alignItems: 'center'
@@ -183,24 +196,7 @@ const SingleFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                   </Typography>
                 <div className="grow" />
                 <div className="flex w-12 justify-end text-xs">
-                  {progress === 'PENDING' ? (
-                    <button
-                      className="rounded-md p-1 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                      onClick={() => {
-                        void onChange?.(
-                          value.filter((_, index) => index !== i),
-                        );
-                      }}
-                    >
-                      <DeleteOutlineIcon className="shrink-0" />
-                    </button>
-                  ) : progress === 'ERROR' ? (
-                    <LucideFileWarning className="shrink-0 text-red-600 dark:text-red-400" />
-                  ) : progress !== 'COMPLETE' ? (
-                    <div>{Math.round(progress)}%</div>
-                  ) : (
-                    <CheckCircleOutlineIcon className="shrink-0 text-green-600 dark:text-gray-400" />
-                  )}
+                  <HandleProgress iter={i} onChange={onChange} progress={progress} value={value} />
                 </div>
               </Stack>
               {/* Progress Bar */}
@@ -239,5 +235,33 @@ function formatFileSize(bytesUnknown?: number): string {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
+
+function HandleProgress({progress, iter, value, onChange}: {
+  iter: number,
+  progress: ProgressState | number,
+  onChange?: (files: FileState[]) => void;
+  value?: FileState[];
+  }): ReactNode {
+      const handlePendingButton = (): void => {
+        if (onChange && value) {
+          value.filter((_, index) => index !== iter)
+        }
+      }
+      if (typeof progress === 'number') {
+        return <Typography>{Math.round(progress)}%</Typography>
+      }
+      switch (progress) {
+        case ProgressState.ERROR:
+          return <LucideFileWarning className="shrink-0 text-red-600 dark:text-red-400" />
+        case ProgressState.COMPLETE:
+          return <CheckCircleOutlineIcon className="shrink-0 text-green-600 dark:text-gray-400" />
+        case ProgressState.PENDING:
+          return (<Button onClick={handlePendingButton}>
+                      <DeleteOutlineIcon className="shrink-0" />
+                    </Button>)
+
+
+      }
+    }
 
 export { SingleFileDropzone };

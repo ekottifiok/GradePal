@@ -109,6 +109,7 @@ export function StaffPage({ courses }: {
 
       }
     }).catch(err => {
+      // eslint-disable-next-line no-console -- I need it to debug
       console.log(err);
       setFormAlert({
         severity: 'error',

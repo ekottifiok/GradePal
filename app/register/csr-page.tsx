@@ -107,7 +107,7 @@ export function CSRPage({user}: {user: UserClaims}): ReactNode {
         }, 1000);
       } else {
         setLoading(false)
-        // eslint-disable-next-line no-console -- debugging
+        // eslint-disable-next-line no-console -- I need it to debug
         console.log(error)
       }
     })

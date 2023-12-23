@@ -74,6 +74,7 @@ export function StaffPage({students}: {
         //     setFormError(buffer)
         //   })
       } else {
+        // eslint-disable-next-line no-console -- I need it to debug
         console.log(message);
         setFormAlert({
           severity: "error",
@@ -82,6 +83,7 @@ export function StaffPage({students}: {
         closeDialog();
       }
     }).catch(err => {
+      // eslint-disable-next-line no-console -- I need it to debug
       console.log(err);
       setFormAlert({
         severity: "error",

@@ -39,7 +39,7 @@ export function CurrentVisits({ title, subheader, chart, ...other }: WidgetsRawD
       y: {
         formatter: (value) => fNumber(value),
         title: {
-          formatter: (seriesName) => `${seriesName}`,
+          formatter: (seriesName) => seriesName,
         },
       },
     },
