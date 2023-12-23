@@ -25,7 +25,6 @@ import {BgGradient} from "@components/theme";
 import {Logo} from "@components/logo";
 import type {ResponseReply, UserClaims} from "@components/interface";
 import {TabPanel} from "@layouts/tab-panel";
-import {IMAGE_PATH} from "@components/constants";
 
 // ----------------------------------------------------------------------
 
@@ -122,7 +121,7 @@ export function CSRPage({user}: {user: UserClaims}): ReactNode {
       sx={{
         ...BgGradient({
           color: alpha(theme.palette.background.default, 0.9),
-          imgUrl: IMAGE_PATH.concat('background/overlay_4.jpg'),
+          imgUrl: 'background/overlay_4.jpg',
         }),
         height: 1,
       }}

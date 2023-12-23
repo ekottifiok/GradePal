@@ -2,7 +2,6 @@ import {alpha, useTheme} from "@mui/material/styles";
 import {Box} from "@mui/material";
 import type {ReactNode} from "react";
 import {BgGradient} from "@components/theme";
-import {IMAGE_PATH} from "@components/constants";
 
 export function Loader(): ReactNode {
   const theme = useTheme();
@@ -16,7 +15,7 @@ export function Loader(): ReactNode {
         width: "inherit",
         ...BgGradient({
           color: alpha(theme.palette.background.default, 0.7),
-          imgUrl: IMAGE_PATH.concat('background/overlay_4.jpg')
+          imgUrl: 'background/overlay_4.jpg'
         }),
       }}
     >
