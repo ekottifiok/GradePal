@@ -4,7 +4,7 @@ import {forwardRef} from 'react';
 import {Icon} from '@iconify/react';
 import Box from '@mui/material/Box';
 
-// ----------------------------------------------------------------------
+
 
 interface IconifyInterface {
   icon: string;

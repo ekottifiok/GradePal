@@ -1,7 +1,7 @@
 import {alpha} from '@mui/material/styles';
 import type {PaletteOptions} from '@components/interface';
 
-// ----------------------------------------------------------------------
+
 
 // SETUP COLORS
 
@@ -100,7 +100,7 @@ const base = {
   action,
 };
 
-// ----------------------------------------------------------------------
+
 
 export function palette(): PaletteOptions {
   return {

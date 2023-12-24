@@ -5,7 +5,7 @@ import { BgBlur } from '@components/theme';
 import type {Theme} from '@components/interface'
 
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-// ----------------------------------------------------------------------
+
 
 const Chart = styled(ApexChart)(({ theme }: {theme: Theme}) => ({
   '& .apexcharts-canvas': {

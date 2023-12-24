@@ -3,7 +3,7 @@ import {SvgColor} from '@components/svg-color';
 import {IMAGE_PATH} from "@components/constants";
 import type {NavConfig} from "@components/interface";
 
-// ----------------------------------------------------------------------
+
 
 const icon = (name: string): ReactNode => (
   <SvgColor src={IMAGE_PATH.concat(`icons/navbar/${name}.svg`)} sx={{ width: 1, height: 1 }} />

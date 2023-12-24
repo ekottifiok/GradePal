@@ -10,7 +10,7 @@ import { overrides } from './overrides';
 import { typography } from './typography';
 import { customShadows as customShadowsFunc } from './custom-shadows';
 
-// ----------------------------------------------------------------------
+
 
 const palette = paletteFunc();
 const shadows = shadowsFunc();

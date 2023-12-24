@@ -41,7 +41,7 @@ export const Paper = ({ bgcolor, dropdown }: PaperInterface): {
   }),
 })}
 
-// ----------------------------------------------------------------------
+
 
 export const MenuItem = (): {
   [x: string]: unknown;
@@ -83,7 +83,7 @@ export const MenuItem = (): {
   },
 })};
 
-// ----------------------------------------------------------------------
+
 
 export function BgBlur(props?: BgBlurInterface): {
   position?: string;
@@ -133,7 +133,7 @@ export function BgBlur(props?: BgBlurInterface): {
   };
 }
 
-// ----------------------------------------------------------------------
+
 
 export function BgGradient(props: BgGradientInterface): {
   background?: string;
@@ -162,7 +162,7 @@ export function BgGradient(props: BgGradientInterface): {
   };
 }
 
-// ----------------------------------------------------------------------
+
 
 export const textGradient = (value: string): {
   background: string,
@@ -175,7 +175,7 @@ export const textGradient = (value: string): {
 })
 
 
-// ----------------------------------------------------------------------
+
 
 export const hideScroll = {
   x: {

@@ -21,7 +21,7 @@ import { fToNow } from '@components/utils/format-time';
 import {Iconify} from '@components/iconify';
 import {Scrollbar} from '@components/scrollbar';
 
-// ----------------------------------------------------------------------
+
 
 interface Notification {
   avatar: string | null,
@@ -182,7 +182,7 @@ export function NotificationsPopover(): ReactNode {
   );
 }
 
-// ----------------------------------------------------------------------
+
 
 
 function NotificationItem({ notification }: {notification: Notification}): ReactNode {
@@ -223,7 +223,7 @@ function NotificationItem({ notification }: {notification: Notification}): React
   );
 }
 
-// ----------------------------------------------------------------------
+
 
 function renderContent(notification: Notification): {avatar: ReactNode, title: ReactNode}{
   const title = (

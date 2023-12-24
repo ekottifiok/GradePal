@@ -4,7 +4,7 @@ import {useTheme} from '@mui/material/styles';
 import {RouterLink} from '@components/routes'
 
 
-// ----------------------------------------------------------------------
+
 
 interface Logo {
   disabledLink?: boolean;

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently \"next dev\" 'quirrel'",
     "build": "next build",
-    "start": "next start",
+    "start": "concurrently \"next start\" 'quirrel'",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watchAll"

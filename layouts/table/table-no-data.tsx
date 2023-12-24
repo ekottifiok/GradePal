@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import type {ReactNode} from "react";
 
-// ----------------------------------------------------------------------
+
 
 export function TableNoData({ query }: {query: string}): ReactNode {
   return (

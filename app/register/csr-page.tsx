@@ -26,7 +26,6 @@ import {Logo} from "@components/logo";
 import type {ResponseReply, UserClaims} from "@components/interface";
 import {TabPanel} from "@layouts/tab-panel";
 
-// ----------------------------------------------------------------------
 
 export function CSRPage({user}: {user: UserClaims}): ReactNode {
   const router = useRouter();
