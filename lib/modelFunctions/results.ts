@@ -165,8 +165,6 @@ export async function createArrayOfResults(
         upsert: true
       }
     })
-
-
   }))
     .then(() => bulkWrite)
     .catch((e) => {

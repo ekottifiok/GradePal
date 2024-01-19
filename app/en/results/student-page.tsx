@@ -36,12 +36,7 @@ export function StudentPage({data}: { data: StudentResultResponse }): ReactNode 
 
     setGpa((sessionQualityPoint / sessionCreditUnit).toFixed(2))
 
-    if (
-      typeof onBeforeGetContentResolve.current === "function"
-    ) {
-      onBeforeGetContentResolve.current();
-    }
-  }, [selectData, results, resultsData, onBeforeGetContentResolve.current]);
+  }, [selectData, results, resultsData]);
 
   const handleSelectChange = (event: SelectChangeEvent): void => {
     const {name, value} = event.target
