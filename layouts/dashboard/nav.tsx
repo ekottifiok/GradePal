@@ -11,6 +11,7 @@ import {Scrollbar} from '@components/scrollbar';
 import {RouterLink} from "@components/routes";
 import type {UsersInterface} from "@components/interface";
 import {DRAWER_WIDTH} from '@components/constants';
+import {ViewPermissionEnum} from "@components/interface";
 import {navConfig} from './config-navigation';
 
 export function Nav({openNav, onCloseNav, user}: {
@@ -28,7 +29,6 @@ export function Nav({openNav, onCloseNav, user}: {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- works fine like this
   }, [pathname]);
-
 
 
   const renderAccount = (
@@ -63,8 +63,13 @@ export function Nav({openNav, onCloseNav, user}: {
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{px: 2}}>
       {navConfig.map((item) => (
-        <NavItem item={item} key={item.title}/>
-      ))}
+          user.isStaff && item.viewPermission === ViewPermissionEnum.Staff ||
+          !user.isStaff && item.viewPermission === ViewPermissionEnum.Student ||
+          item.viewPermission === undefined
+        ) ? (
+          <NavItem item={item} key={item.title}/>
+        ) : null
+      )}
     </Stack>
   );
 
@@ -80,8 +85,8 @@ export function Nav({openNav, onCloseNav, user}: {
         },
       }}
     >
-      <Box mt={4} />
-      <Logo />
+      <Box mt={4}/>
+      <Logo/>
 
       {renderAccount}
 
@@ -143,31 +148,31 @@ function NavItem({item}: {
   return (
     <ListItem>
       <ListItemButton
-      component={RouterLink}
-      href={item.path}
-      sx={{
-        minHeight: 44,
-        borderRadius: 0.75,
-        typography: 'body2',
-        color: 'text.secondary',
-        textTransform: 'capitalize',
-        fontWeight: 'fontWeightMedium',
-        ...(active && {
-          color: 'primary.main',
-          fontWeight: 'fontWeightSemiBold',
-          bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
-          '&:hover': {
-            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16),
-          },
-        }),
-      }}
-    >
+        component={RouterLink}
+        href={item.path}
+        sx={{
+          minHeight: 44,
+          borderRadius: 0.75,
+          typography: 'body2',
+          color: 'text.secondary',
+          textTransform: 'capitalize',
+          fontWeight: 'fontWeightMedium',
+          ...(active && {
+            color: 'primary.main',
+            fontWeight: 'fontWeightSemiBold',
+            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
+            '&:hover': {
+              bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16),
+            },
+          }),
+        }}
+      >
 
-      <ListItemIcon sx={{width: 24, height: 24}}>
-        {item.icon}
-      </ListItemIcon>
-      <ListItemText primary={item.title}/>
-    </ListItemButton>
+        <ListItemIcon sx={{width: 24, height: 24}}>
+          {item.icon}
+        </ListItemIcon>
+        <ListItemText primary={item.title}/>
+      </ListItemButton>
     </ListItem>
   );
 }

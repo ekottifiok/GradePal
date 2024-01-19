@@ -17,7 +17,7 @@ export const Iconify = forwardRef<HTMLElement, IconifyInterface>(
   function IconifyRender({
                            className,
                            icon,
-                           width = '20',
+                           width = '30',
                            sx, ...other}, ref): ReactNode {
     return (
       <Box

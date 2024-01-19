@@ -1,6 +1,6 @@
-import type { ChangeEvent, HTMLInputTypeAttribute, MouseEvent, ReactNode } from "react";
-import { useState } from "react";
-import { CancelOutlined, CheckCircleOutlineOutlined, RemoveOutlined } from "@mui/icons-material";
+import type {ChangeEvent, HTMLInputTypeAttribute, MouseEvent, ReactNode} from "react";
+import {useState} from "react";
+import {CancelOutlined, CheckCircleOutlineOutlined, RemoveOutlined} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import {
   Avatar,
@@ -29,12 +29,13 @@ import type {
   HandleTableTypes,
   ResultsInterface,
   StudentResultsTable,
-  UsersInterface
+  UsersInterface,
+  TableContentType
 } from "@components/interface";
-import { AllModelsEnum, ExtendedModelEnum } from '@components/interface'
-import { Iconify } from "@components/iconify";
+import {AllModelsEnum, ExtendedModelEnum} from '@components/interface'
+import {Iconify} from "@components/iconify";
 import {IMAGE_PATH} from "@components/constants";
-import { fToNow } from "@components/utils";
+import {fToNow} from "@components/utils";
 
 interface Parameters {
   selected: boolean;
@@ -50,10 +51,9 @@ interface ModelTableCellParameters {
 }
 
 interface ViewTableItems {
-  content?: string | number | boolean;
+  content?: TableContentType;
   key: number;
   title: string;
-  type?: 'boolean'
 }
 
 interface FormEditItems {
@@ -84,8 +84,8 @@ enum DialogOptions {
   View = 'View',
 }
 
-export function HandleTableRow({ selected, data, handleClick, modelType }: Parameters): ReactNode {
-  const initialOpen = { popover: null, edit: false, delete: false, view: false }
+export function HandleTableRow({selected, data, handleClick, modelType}: Parameters): ReactNode {
+  const initialOpen = {popover: null, edit: false, delete: false, view: false}
 
   const initialFormError: FormErrorParameters = {
     name: '', courseCode: '', creditUnit: '', title: ''
@@ -96,26 +96,26 @@ export function HandleTableRow({ selected, data, handleClick, modelType }: Param
   const formError = initialFormError
 
   const handleCloseMenu = (): void => {
-    setOpen({ ...open, popover: null });
+    setOpen({...open, popover: null});
   };
 
   const handleDelete = (): void => {
-    setOpen({ ...open, delete: !open.delete })
+    setOpen({...open, delete: !open.delete})
   }
 
   const handleEdit = (): void => {
-    setOpen({ ...open, edit: !open.edit })
+    setOpen({...open, edit: !open.edit})
   }
 
   const handleOpenMenu = (event: MouseEvent<HTMLButtonElement>): void => {
-    setOpen({ ...open, popover: event.currentTarget });
+    setOpen({...open, popover: event.currentTarget});
   };
 
   const handleView = (): void => {
-    setOpen({ ...open, view: !open.view })
+    setOpen({...open, view: !open.view})
   }
 
-  const { _id } = data
+  const {_id} = data
 
   return (
     <>
@@ -131,10 +131,10 @@ export function HandleTableRow({ selected, data, handleClick, modelType }: Param
 
         </TableCell>
 
-        <Logic dataModel={data} modelType={modelType} />
+        <Logic dataModel={data} modelType={modelType}/>
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
-            <Iconify icon="eva:more-vertical-fill" />
+            <Iconify icon="eva:more-vertical-fill"/>
           </IconButton>
         </TableCell>
       </TableRow>
@@ -214,23 +214,23 @@ export function HandleTableRow({ selected, data, handleClick, modelType }: Param
 
       <Popover
         anchorEl={open.popover as Element}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        anchorOrigin={{vertical: 'top', horizontal: 'left'}}
         onClose={handleCloseMenu}
         open={Boolean(open.popover)}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{vertical: 'top', horizontal: 'right'}}
       >
         <MenuItem onClick={handleView}>
-          <Iconify icon="mdi:show-outline" sx={{ mr: 2 }} />
+          <Iconify icon="mdi:show-outline" sx={{mr: 2}}/>
           View
         </MenuItem>
 
         <MenuItem onClick={handleEdit}>
-          <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
+          <Iconify icon="eva:edit-fill" sx={{mr: 2}}/>
           Edit
         </MenuItem>
 
-        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-          <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
+        <MenuItem onClick={handleDelete} sx={{color: 'error.main'}}>
+          <Iconify icon="eva:trash-2-outline" sx={{mr: 2}}/>
           Delete
         </MenuItem>
       </Popover>
@@ -268,15 +268,15 @@ function Logic(
           {
             key: 0, content: (
               <Stack alignItems="center" direction="row" spacing={2}>
-                <Avatar alt={data.name} src={IMAGE_PATH.concat(data.picture || 'images/avatar/avatar_1.jpg')} />
+                <Avatar alt={data.name} src={IMAGE_PATH.concat(data.picture || 'images/avatar/avatar_1.jpg')}/>
                 <Typography noWrap variant="subtitle2">
                   {data.name}
                 </Typography>
               </Stack>
             )
           },
-          { key: 2, content: data.matriculationNumber },
-          { key: 3, content: data.department },
+          {key: 2, content: data.matriculationNumber},
+          {key: 3, content: data.department},
           {
             key: 4, content: data.isSignedUp, type: "boolean"
           },
@@ -286,20 +286,20 @@ function Logic(
           case DialogOptions.Edit:
             if (formError) {
               formEditItems = [
-                { label: 'Name', key: 0, name: 'name', error: formError.name, value: data.name }
+                {label: 'Name', key: 0, name: 'name', error: formError.name, value: data.name}
               ]
             }
             break
           case DialogOptions.View:
             gender = data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : 'Female';
             viewTableItems = [
-              { title: 'Name', content: data.name, key: 0 },
-              { title: 'Matriculation Number', content: data.matriculationNumber, key: 1 },
-              { title: 'Gender', content: gender, key: 2 },
-              { title: 'Department', content: data.department, key: 3 },
-              { title: 'Email Address', content: data.email, key: 4 },
-              { title: 'Created At', content: fToNow(data.createdAt), key: 5 },
-              { title: 'Updated At', content: fToNow(data.updatedAt), key: 6 }
+              {title: 'Name', content: data.name, key: 0},
+              {title: 'Matriculation Number', content: data.matriculationNumber, key: 1},
+              {title: 'Gender', content: gender, key: 2},
+              {title: 'Department', content: data.department, key: 3},
+              {title: 'Email Address', content: data.email, key: 4},
+              {title: 'Created At', content: fToNow(data.createdAt), key: 5},
+              {title: 'Updated At', content: fToNow(data.updatedAt), key: 6}
             ]
             break
         }
@@ -310,9 +310,9 @@ function Logic(
 
       if (dialogOption === undefined) {
         tableCell = [
-          { key: 0, content: data.title },
-          { key: 1, content: data.courseCode },
-          { key: 2, content: data.creditUnit },
+          {key: 0, content: data.title},
+          {key: 1, content: data.courseCode},
+          {key: 2, content: data.creditUnit},
         ]
         break
       }
@@ -321,18 +321,18 @@ function Logic(
         case DialogOptions.Edit:
           if (formError) {
             formEditItems = [
-              { label: 'Title', key: 0, name: 'title', error: formError.title, value: data.title }
+              {label: 'Title', key: 0, name: 'title', error: formError.title, value: data.title}
             ]
           }
           break
         case DialogOptions.View:
           viewTableItems = [
-            { title: 'Title', content: data.title, key: 0 },
-            { title: 'Course Code', content: data.courseCode, key: 1 },
-            { title: 'Credit Unit', content: data.creditUnit, key: 2 },
-            { title: 'Created By', content: data.createdBy, key: 3 },
-            { title: 'Created At', content: fToNow(data.createdAt), key: 4 },
-            { title: 'Updated At', content: fToNow(data.updatedAt), key: 5 }
+            {title: 'Title', content: data.title, key: 0},
+            {title: 'Course Code', content: data.courseCode, key: 1},
+            {title: 'Credit Unit', content: data.creditUnit, key: 2},
+            {title: 'Created By', content: data.createdBy, key: 3},
+            {title: 'Created At', content: fToNow(data.createdAt), key: 4},
+            {title: 'Updated At', content: fToNow(data.updatedAt), key: 5}
           ]
 
           break
@@ -342,7 +342,8 @@ function Logic(
       data = dataModel as ResultsInterface
       if (dialogOption === undefined) {
         tableCell = [
-          { key: 0, content: data.matriculationNumber }
+          {key: 0, content: data.matriculationNumber},
+          {key: 1, content: data.results.length}
         ]
         break
       }
@@ -351,10 +352,10 @@ function Logic(
         case DialogOptions.Edit:
         case DialogOptions.View:
           viewTableItems = [
-            { title: 'Matriculation Number', key: 0, content: data.matriculationNumber },
-            { title: 'Number of Results Uploaded', key: 1, content: data.results.length },
-            { title: 'Created At', content: fToNow(data.createdAt), key: 5 },
-            { title: 'Updated At', content: fToNow(data.updatedAt), key: 6 }
+            {title: 'Matriculation Number', key: 0, content: data.matriculationNumber},
+            {title: 'Number of Results Uploaded', key: 1, content: data.results.length},
+            {title: 'Created At', content: fToNow(data.createdAt), key: 5},
+            {title: 'Updated At', content: fToNow(data.updatedAt), key: 6}
           ]
           break
       }
@@ -363,10 +364,10 @@ function Logic(
       data = dataModel as StudentResultsTable
       if (dialogOption === undefined) {
         tableCell = [
-          { key: 0, content: data.courseCode },
-          { key: 1, content: data.creditUnit },
-          { key: 2, content: data.grade },
-          { key: 4, content: data.approved, type: 'boolean' },
+          {key: 0, content: data.courseCode},
+          {key: 1, content: data.creditUnit},
+          {key: 2, content: data.grade},
+          {key: 4, content: data.approved, type: 'boolean'},
         ]
         break
       }
@@ -375,13 +376,14 @@ function Logic(
         case DialogOptions.Edit:
         case DialogOptions.View:
           viewTableItems = [
-            { title: 'Approved', key: 0, content: data.approved, type: 'boolean' },
-            { title: 'Course Code', key: 1, content: data.courseCode },
-            { title: 'Course Title', key: 2, content: data.courseTitle },
-            { title: 'Quality Point', key: 3, content: data.qualityPoint },
-            { title: 'Score', key: 4, content: data.score },
-            { title: 'Uploaded At', key: 5, content: fToNow(data.uploadedAt) },
-            { title: 'Uploaded By', key: 6, content: data.uploadedBy }
+            {title: 'Approved', key: 0, content: data.approved},
+            {title: 'Course Code', key: 1, content: data.courseCode},
+            {title: 'Course Title', key: 2, content: data.title},
+            {title: 'Quality Point', key: 3, content: data.qualityPoint},
+            {title: 'Score', key: 4, content: data.score},
+            {title: 'Semester', key: 5, content: data.semester},
+            {title: 'Uploaded At', key: 6, content: fToNow(data.uploadedAt)},
+            {title: 'Uploaded By', key: 7, content: data.uploadedBy}
           ]
           break
       }
@@ -389,21 +391,21 @@ function Logic(
   }
 
   if (tableCell) {
-    return <ModelsTableCell data={tableCell} />
+    return <ModelsTableCell data={tableCell}/>
   } else if (dialogOption) {
     switch (dialogOption) {
       case DialogOptions.Edit:
         if (handleFormData && formEditItems) {
-          return <EditDialog formItems={formEditItems} handleFormData={handleFormData} />
+          return <EditDialog formItems={formEditItems} handleFormData={handleFormData}/>
         }
         break
       case DialogOptions.View:
-        return viewTableItems && <ViewDialog tableItems={viewTableItems} />
+        return viewTableItems && <ViewDialog tableItems={viewTableItems}/>
     }
   }
 }
 
-function ModelsTableCell({ data }: { data: ModelTableCellParameters[] }): ReactNode {
+function ModelsTableCell({data}: { data: ModelTableCellParameters[] }): ReactNode {
 
   return (
     <>
@@ -414,11 +416,12 @@ function ModelsTableCell({ data }: { data: ModelTableCellParameters[] }): ReactN
           case 'boolean':
 
             content = item.content ? (
-              <CheckCircleOutlineOutlined sx={{ color: "rgb(0 120 103 /74%)" }} />
-            ) : (<CancelOutlined sx={{ color: "rgb(183 29 24 / 74%)" }} />)
+              <CheckCircleOutlineOutlined sx={{color: "rgb(0 120 103 /74%)"}}/>
+            ) : (<CancelOutlined sx={{color: "rgb(183 29 24 / 74%)"}}/>)
             break
 
-          default: content = item.content || <RemoveOutlined />
+          default:
+            content = item.content || <RemoveOutlined/>
             break;
         }
 
@@ -437,7 +440,7 @@ function ModelsTableCell({ data }: { data: ModelTableCellParameters[] }): ReactN
   )
 }
 
-function EditDialog({ handleFormData, formItems }: {
+function EditDialog({handleFormData, formItems}: {
   handleFormData: (event: ChangeEvent<HTMLInputElement>) => void;
   formItems: FormEditItems[]
 }): ReactNode {
@@ -462,7 +465,7 @@ function EditDialog({ handleFormData, formItems }: {
   )
 }
 
-function ViewDialog({ tableItems }: {
+function ViewDialog({tableItems}: {
   tableItems: ViewTableItems[]
 }): ReactNode {
 
@@ -477,15 +480,7 @@ function ViewDialog({ tableItems }: {
                   {item.title}
                 </TableCell>
                 <TableCell>
-                  {item.type === 'boolean' ? (
-                    <span>
-                      {item.content ? <CheckCircleOutlineOutlined sx={{ color: "rgb(0 120 103 /74%)" }} />
-                        : <CancelOutlined sx={{ color: "rgb(183 29 24 / 74%)" }} />
-                      }
-
-                    </span>
-                  ) : item.content || <RemoveOutlined />
-                  }
+                  <ViewDialogContent content={item.content} />
                 </TableCell>
               </TableRow>
             ))}
@@ -494,4 +489,22 @@ function ViewDialog({ tableItems }: {
       </TableContainer>
     </DialogContentText>
   )
+}
+
+function ViewDialogContent({content}: { content: TableContentType }): ReactNode {
+  const type = typeof content
+  switch (type) {
+    case "undefined":
+      return <RemoveOutlined/>
+    case 'boolean':
+      return content ? <CheckCircleOutlineOutlined sx={{color: "rgb(0 120 103 /74%)"}}/>
+        : <CancelOutlined sx={{color: "rgb(183 29 24 / 74%)"}}/>
+    case "number":
+    case "string":
+    case "bigint":
+    case "symbol":
+    case "object":
+    case "function":
+      return <Typography>{content}</Typography>
+  }
 }

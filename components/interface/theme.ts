@@ -27,6 +27,14 @@ export interface BgGradientInterface {
   color?: string;
 }
 
+export interface BgGradientResponse {
+  background?: string;
+  backgroundSize?: string;
+  backgroundRepeat?: string;
+  backgroundPosition?: string;
+}
+
+
 export interface Palette extends MUIPalette {
   background: Background;
   error: PaletteColor;

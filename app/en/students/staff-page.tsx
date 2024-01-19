@@ -116,7 +116,7 @@ export function StaffPage({students}: {
   return (
     <Box>
       <Stack alignItems='center' direction='row' justifyContent='space-between' mb={5}>
-        <Typography variant='h4'>{title}</Typography>
+        <Typography variant='h3'>{title}</Typography>
 
         <Button
           color='inherit'

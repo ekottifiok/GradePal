@@ -2,8 +2,6 @@ import type { Breakpoint} from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-
 export function useResponsive(query: string, start: Breakpoint, end?: Breakpoint): boolean {
   const theme = useTheme();
 
@@ -29,19 +27,3 @@ export function useResponsive(query: string, start: Breakpoint, end?: Breakpoint
 
   return mediaOnly;
 }
-
-// 
-
-// export function useWidth():string[] {
-//   const theme = useTheme();
-
-//   const keys = [...theme.breakpoints.keys].reverse();
-
-//   return (
-//     keys.reduce((output: any, key: Breakpoint) => {
-//       const matches = useMediaQuery(theme.breakpoints.up(key));
-
-//       return !output && matches ? key : output;
-//     }, null) || 'xs'
-//   );
-// }

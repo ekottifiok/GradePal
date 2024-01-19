@@ -1,22 +1,29 @@
-import {alpha, useTheme} from "@mui/material/styles";
 import {Box} from "@mui/material";
 import type {ReactNode} from "react";
-import {BgGradient} from "@components/theme";
+import type {BgGradientResponse} from "@components/interface/theme";
+import {useSystemModeIsDark} from "@components/hooks";
 
-export function Loader(): ReactNode {
-  const theme = useTheme();
+export function Loader({background}: { background?: BgGradientResponse }): ReactNode {
+
+  const bgColor = useSystemModeIsDark() ? 'black' : 'white'
+
   return (
     <Box
       sx={{
+        position: "fixed",
+        overflow: "show",
+        margin: "auto",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
         alignItems: "center",
         display: "flex",
-        height: "inherit",
+        height: "100%",
         justifyContent: "center",
-        width: "inherit",
-        ...BgGradient({
-          color: alpha(theme.palette.background.default, 0.7),
-          imgUrl: 'background/overlay_4.jpg'
-        }),
+        width: "100%",
+        backgroundColor: background ? undefined : bgColor,
+        ...background
       }}
     >
       <div className="line">

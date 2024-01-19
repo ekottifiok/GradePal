@@ -1,6 +1,7 @@
 // noinspection HtmlUnknownTarget
 
 import './globals.css';
+import '@public/stylesheets/loading.css'
 import type {ReactNode} from 'react';
 import React from "react";
 import {UserProvider} from "@auth0/nextjs-auth0/client";

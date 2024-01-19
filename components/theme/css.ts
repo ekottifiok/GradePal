@@ -1,4 +1,4 @@
-import {alpha, useColorScheme, useTheme} from '@mui/material/styles';
+import {alpha, useTheme} from '@mui/material/styles';
 import { dividerClasses } from '@mui/material/Divider';
 import { checkboxClasses } from '@mui/material/Checkbox';
 import { menuItemClasses } from '@mui/material/MenuItem';
@@ -6,6 +6,8 @@ import { autocompleteClasses } from '@mui/material/Autocomplete';
 import type { Fontface } from '@mui/material/styles/createTypography';
 import type { BgBlurInterface, BgGradientInterface, PaperInterface, Theme } from '@components/interface';
 import {IMAGE_PATH} from "@components/constants";
+import type {BgGradientResponse} from "@components/interface/theme";
+import {useSystemModeIsDark} from "@components/hooks";
 
 export const Paper = ({ bgcolor, dropdown }: PaperInterface): {
   elevation?: number;
@@ -105,11 +107,11 @@ export function BgBlur(props?: BgBlurInterface): {
   backgroundColor?: string | undefined;
 } {
   const theme: Theme = useTheme();
-  const { mode } = useColorScheme();
   const color = props?.color || theme.palette.background.default;
   const blur = props?.blur || 6;
   const opacity = props?.opacity || 0.8;
   const imgUrl = props?.imgUrl;
+  const mode = useSystemModeIsDark()
 
   return imgUrl ? {
     position: 'relative',
@@ -129,18 +131,13 @@ export function BgBlur(props?: BgBlurInterface): {
   } : {
     backdropFilter: `blur(${blur}px)`,
     WebkitBackdropFilter: `blur(${blur}px)`,
-    backgroundColor: mode === 'dark' ? undefined :  alpha(color, opacity),
+    backgroundColor: mode ? undefined :  alpha(color, opacity),
   };
 }
 
 
 
-export function BgGradient(props: BgGradientInterface): {
-  background?: string;
-  backgroundSize?: string;
-  backgroundRepeat?: string;
-  backgroundPosition?: string;
-} {
+export function BgGradient(props: BgGradientInterface): BgGradientResponse {
   const direction = props.direction || 'to bottom';
   const startColor = props.startColor;
   const endColor = props.endColor;

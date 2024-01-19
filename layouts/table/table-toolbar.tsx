@@ -1,22 +1,36 @@
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
+import {
+  InputAdornment,
+  OutlinedInput,
+  Toolbar,
+  Tooltip,
+  Typography
+} from '@mui/material';
+import IconButton from "@mui/material/IconButton"
 import type {ChangeEvent, ReactNode} from "react";
 import {Iconify} from '@components/iconify';
-
+import type {TableOptions} from '@components/interface';
+import {ReplaceDeleteEnum} from '@components/interface';
 
 interface TableToolbar {
-  numSelected: number
+  children: ReactNode,
+  numSelected: number;
   filterName: string;
   onFilterName: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
+  options?: TableOptions;
 }
 
 
-export function TableToolbar({ numSelected, filterName, onFilterName, placeholder }: TableToolbar): ReactNode {
+export function TableToolbar(
+  {
+    children,
+    filterName,
+    numSelected,
+    onFilterName,
+    placeholder,
+    options
+  }: TableToolbar): ReactNode {
+
   return (
     <Toolbar
       sx={{
@@ -42,7 +56,7 @@ export function TableToolbar({ numSelected, filterName, onFilterName, placeholde
             <InputAdornment position="start">
               <Iconify
                 icon="eva:search-fill"
-                sx={{ color: 'text.disabled', width: 20, height: 20 }}
+                sx={{color: 'text.disabled', width: 20, height: 20}}
               />
             </InputAdornment>
           }
@@ -50,19 +64,38 @@ export function TableToolbar({ numSelected, filterName, onFilterName, placeholde
         />
       )}
 
+      {children}
+
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Iconify icon="eva:trash-2-fill"  />
-          </IconButton>
-        </Tooltip>
+        <SelectAllAction flag={options?.replaceDelete}/>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
-            <Iconify icon="ic:round-filter-list" />
+            <Iconify icon="ic:round-filter-list"/>
           </IconButton>
         </Tooltip>
       )}
     </Toolbar>
   )
+}
+
+function SelectAllAction({flag}: { flag?: ReplaceDeleteEnum }): ReactNode {
+  switch (flag) {
+    case ReplaceDeleteEnum.Report:
+      return (
+        <Tooltip title="Report">
+          <IconButton>
+            <Iconify icon="material-symbols:report"/>
+          </IconButton>
+        </Tooltip>
+      )
+    default:
+      return (
+        <Tooltip title="Delete">
+          <IconButton>
+            <Iconify icon="eva:trash-2-fill"/>
+          </IconButton>
+        </Tooltip>
+      )
+  }
 }

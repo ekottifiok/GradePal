@@ -116,7 +116,7 @@ export function StaffPage({ results }: {results: ResultsInterface[]}): ReactNode
   return (
     <Box>
       <Stack alignItems='center' direction='row' justifyContent='space-between' mb={5}>
-        <Typography variant='h4'>Results</Typography>
+        <Typography variant='h3'>Results</Typography>
 
         <Button
           aria-haspopup="true"
@@ -148,7 +148,7 @@ export function StaffPage({ results }: {results: ResultsInterface[]}): ReactNode
           <DialogContentText>
             Please fill this form, upload an excel result sheet and submit to add results.
             Note this is to add a multiple result and it should follow the accepted format.
-            To view the format click <a href="/format">here</a>.
+            To view the format click <a href="format">here</a>.
           </DialogContentText>
           <Stack spacing={3}>
             {

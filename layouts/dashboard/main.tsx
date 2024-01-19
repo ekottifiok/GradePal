@@ -34,11 +34,9 @@ export function Main({children, sx, ...other}: Main): ReactNode {
       }}
       {...other}
     >
-      <Container>
-        <Suspense fallback={<Loading/>}>
-          {children}
-        </Suspense>
-      </Container>
+      <Suspense fallback={<Loading/>}>
+        {children}
+      </Suspense>
     </Box>
   );
 }

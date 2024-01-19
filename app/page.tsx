@@ -36,7 +36,7 @@ export default function Page(): ReactNode {
         <Typography sx={{ py: 1.3 }} variant='h1'>
           Welcome to GradePal
         </Typography>
-        <Typography variant='h4'>
+        <Typography variant='h3'>
           Your pal when it comes to handling results
         </Typography>
 
