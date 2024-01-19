@@ -11,7 +11,8 @@ export const Users = models?.Users || model<UsersInterface>('Users', new Schema(
   isStaff: { type: Boolean, default: false },
   matriculationNumber: { type: String, unique: true, sparse: true},
   name: { type: String, required: true },
-  picture: { type: String, }, staffRole: { type: String },
+  picture: { type: String, },
+  staffRole: { type: String },
   // from base document
   deletedAt: {type: Date},
   deletedBy: {type: Schema.Types.ObjectId}
