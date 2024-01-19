@@ -7,6 +7,14 @@ export enum TableOrder {
   DESC = 'desc'
 }
 
+export enum ReplaceDeleteEnum {
+  Report = 'report'
+}
+export interface TableOptions {
+  hidePagination?: boolean
+  replaceDelete?: ReplaceDeleteEnum
+}
+
 export interface HeadLabelParameters {
   id: string;
   label?: string;
@@ -16,6 +24,8 @@ export interface HeadLabelParameters {
 export enum ExtendedModelEnum {
   StudentResults = 'StudentResults',
 }
+
+export type TableContentType = string | number | boolean | undefined
 
 export type HandleTableEnum = AllModelsEnum | ExtendedModelEnum
 

@@ -133,7 +133,7 @@ export function StaffPage({ courses }: {
     <Box>
 
       <Stack alignItems='center' direction='row' justifyContent='space-between' mb={5}>
-        <Typography variant='h4'>Courses</Typography>
+        <Typography variant='h3'>Courses</Typography>
          <Button
           color='inherit'
           onClick={handleDialog}

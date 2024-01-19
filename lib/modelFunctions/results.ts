@@ -1,17 +1,17 @@
-import {Schema} from "mongoose";
-import {v4 as uuidV4} from "uuid";
-import {dbConnect} from "@lib/database";
+import { Schema } from "mongoose";
+import { dbConnect } from "@lib/database";
 import type {
+  BaseDocument,
   BulkWriteArray,
   CUResults,
-  ResultDataId,
+  ResultData,
   ResultJson,
   ResultsInterface,
   StudentResultResponse,
-  UsersInterface
+  StudentResultsTable,
 } from "@components/interface";
-import {Results, Users} from "@models";
-import {getAllCourses} from "./courses";
+import { Courses, Results, Users } from "@models";
+import { getAllCourses } from "./courses";
 
 
 const ResultsFields = ['Matriculation Number', 'Name', 'Score']
@@ -27,7 +27,7 @@ export async function createArrayOfResults(
   courseDetails: string[], session: string, uploadedAt: Date
 ): Promise<BulkWriteArray> {
   await dbConnect();
-  const bulkWrite: BulkWriteArray = {courses: [], results: [], users: [], error: []};
+  const bulkWrite: BulkWriteArray = { courses: [], results: [], users: [], error: [] };
 
   if (courseDetails.length !== 3) {
     bulkWrite.error.push({
@@ -37,26 +37,59 @@ export async function createArrayOfResults(
     return bulkWrite
   }
 
-  const [courseCode, courseTitle, creditUnitStr] = courseDetails
+  const [courseCodeSemester, courseTitle, creditUnitStr] = courseDetails
+  const [courseCode, semesterString] = courseCodeSemester.split('.')
   const creditUnit = parseInt(creditUnitStr, 10);
+  const semester = parseInt(semesterString, 10);
   if (Number.isNaN(creditUnit)) {
-    bulkWrite.error.push({extra: courseDetails, description: 'Failed to parse creditUnit details'})
+    bulkWrite.error.push({
+      extra: courseDetails,
+      description: 'Failed to parse creditUnit'
+    })
+    return bulkWrite
+  }
+  if (!courseCode) {
+    bulkWrite.error.push({
+      extra: courseCodeSemester,
+      description: 'Failed to find course code'
+    })
+    return bulkWrite
+  }
+  if (!courseTitle) {
+    bulkWrite.error.push({
+      extra: courseCodeSemester,
+      description: 'Failed to find course title'
+    })
+    return bulkWrite
+  }
+  if (Number.isNaN(semester)) {
+    bulkWrite.error.push({
+      extra: courseCodeSemester,
+      description: 'Failed to parse semester'
+    })
     return bulkWrite
   }
 
-  bulkWrite.courses.push({
-    updateOne: {
-      filter: {courseCode, title: courseTitle},
-      update: {
-        courseCode,
-        title: courseTitle,
-        department,
-        creditUnit,
-        createdBy: uploadedBy
-      },
-      upsert: true
-    }
-  })
+  await Courses.exists({ courseCode, creditUnit, department, semester })
+    .then((res) => {
+      if (!res) {
+        bulkWrite.courses.push({
+          updateOne: {
+            filter: { courseCode, title: courseTitle },
+            update: {
+              courseCode,
+              department,
+              creditUnit,
+              createdBy: uploadedBy,
+              semester,
+              title: courseTitle,
+            },
+            upsert: true
+          }
+        })
+      }
+    })
+
 
   return Promise.all(resultArray.map(async (dataUnknown: unknown) => {
     if (!dataUnknown || typeof dataUnknown !== "object") {
@@ -78,7 +111,7 @@ export async function createArrayOfResults(
     const name = data.Name
     const score = parseInt(data.Score, 10)
     if (isNaN(score)) {
-      bulkWrite.error.push({extra: resultArray, description: "Failed to parse score"})
+      bulkWrite.error.push({ extra: resultArray, description: "Failed to parse score" })
       return
     }
 
@@ -103,9 +136,8 @@ export async function createArrayOfResults(
       gradePoint = 0
     }
 
-    await Users.findOne<UsersInterface>({name, matriculationNumber})
+    await Users.exists({ name, matriculationNumber })
       .then((user) => {
-
         if (!user) {
           bulkWrite.users.push({
             insertOne: {
@@ -117,26 +149,26 @@ export async function createArrayOfResults(
             }
           })
         }
-        bulkWrite.results.push({
-          updateOne: {
-            filter: {matriculationNumber},
-            update: {
-              $set: {matriculationNumber}, $push: {
-                results: {
-                  uploadedBy, courseCode, session, score, grade,
-                  uploadedAt, approved: false, qualityPoint: gradePoint * creditUnit
-                }
-              }
-            },
-            upsert: true
+      });
+    bulkWrite.results.push({
+      updateOne: {
+        filter: { matriculationNumber },
+        update: {
+          $set: { matriculationNumber },
+          $push: {
+            results: {
+              uploadedBy, courseCode, session, score, grade,
+              uploadedAt, approved: false, qualityPoint: gradePoint * creditUnit
+            }
           }
-        })
-
-      })
+        },
+        upsert: true
+      }
+    })
   }))
     .then(() => bulkWrite)
     .catch((e) => {
-      bulkWrite.error.push({extra: e as unknown, description: "Unhandled error"})
+      bulkWrite.error.push({ extra: e as unknown, description: "Unhandled error" })
       return bulkWrite
     })
 }
@@ -158,48 +190,41 @@ export async function getOneResult(id: string): Promise<ResultsInterface | null>
     )
 }
 
-export async function getStudentResult(matriculationNumber: string | undefined): Promise<StudentResultResponse[]> {
-  if (!matriculationNumber) {
-    return []
-  }
-  await dbConnect();
-  return Promise.all([Results.find<ResultsInterface>({matriculationNumber}), getAllCourses()])
-    .then(([res, courses]) => {
-      if (res.length === 0) {
-        return []
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- JSON is any
-      const resultsLists = res.map(i => JSON.parse(JSON.stringify(i.results)))[0] as ResultDataId[]
-      const sessionList: string[] = []
-      const resultsIdList: string[] = []
-      const sortedList: StudentResultResponse[] = []
+export async function getStudentResult(matriculationNumber?: string): Promise<StudentResultResponse> {
+  let totalCreditUnit = 0, totalQualityPoint = 0;
+  const results: StudentResultsTable[] = [], sessionArray: string[] = [];
+  const initialResponse = { cgpa: '0', results, sessionArray }
 
-      resultsLists.forEach((item) => {
-        if (item._id && !(resultsIdList.includes(item._id))) {
-          resultsIdList.push(item._id)
+  if (!matriculationNumber) {
+    return initialResponse
+  }
+
+  await dbConnect();
+  return Promise.all([Results.findOne<ResultsInterface>({ matriculationNumber }), getAllCourses()])
+    .then(([resultsInterface, courses]) => {
+      if (!resultsInterface) {
+        return initialResponse
+      }
+      const resultsData = resultsInterface.results
+      if (resultsData.length === 0) {
+        return initialResponse
+      }
+
+      resultsData.forEach((itemResults) => {
+        const item = JSON.parse(JSON.stringify((itemResults))) as ResultData & Pick<BaseDocument, '_id'>
+        const { creditUnit, semester, title } = courses.filter(i => i.courseCode === item.courseCode)[0]
+        totalCreditUnit += creditUnit
+        totalQualityPoint += item.qualityPoint
+        if (!sessionArray.includes(item.session)) {
+          sessionArray.push(item.session)
         }
-        const session = item.session;
-        const coursesData = courses.filter(i => i.courseCode === item.courseCode)[0]
-        const resultData = {
-          ...item,
-          courseTitle: coursesData.title,
-          creditUnit: coursesData.creditUnit,
-        }
-        if (!(sessionList.includes(session))) {
-          sessionList.push(session);
-          sortedList.push({
-            id: uuidV4(), session, results: [resultData]
-          })
-        } else {
-          sortedList.forEach((value, index) => {
-            if (value.session === session) {
-              sortedList[index].results.push(resultData)
-            }
-          })
-        }
+        results.push({ ...item, title, creditUnit, semester })
 
       })
-      return sortedList
+      return {
+        cgpa: (totalQualityPoint / totalCreditUnit).toFixed(2),
+        results, sessionArray: sessionArray.sort()
+      }
     })
 }
 

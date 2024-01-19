@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import {IMAGE_PATH} from "@components/constants";
 
-// ----------------------------------------------------------------------
+
 
 const LANGUAGES = [
   {
@@ -27,7 +27,7 @@ const LANGUAGES = [
   },
 ];
 
-// ----------------------------------------------------------------------
+
 
 export function LanguagePopover(): ReactNode {
   const [isOpen, setIsOpen] = useState<EventTarget | null>(null);

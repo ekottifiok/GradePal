@@ -6,6 +6,7 @@ import type {
   HandleTableEnum,
   HandleTableTypes,
   HeadLabelParameters,
+  TableOptions,
 } from "@components/interface";
 import { TableOrder} from "@components/interface/table";
 import {applyFilter, emptyRows, getComparator} from "@layouts/table/utils";
@@ -22,9 +23,11 @@ interface Parameters {
   initialOrder: string;
   modelType: HandleTableEnum;
   parentModel?: AllModelsEnum;
+  options?: TableOptions;
 }
 
-export function HandleTable({data, initialOrder, headLabel, modelType, parentModel}: Parameters): ReactNode {
+export function HandleTable(
+  {data, initialOrder, headLabel, modelType, options, parentModel}: Parameters): ReactNode {
 
   const [filterName, setFilterName] = useState('');
 
@@ -105,6 +108,7 @@ export function HandleTable({data, initialOrder, headLabel, modelType, parentMod
           filterName={filterName}
           numSelected={selected.length}
           onFilterName={handleFilterByName}
+          options={options}
           placeholder={`Search ${(parentModel || modelType).toLowerCase()}...`}
         />
         <Scrollbar>
@@ -153,7 +157,8 @@ export function HandleTable({data, initialOrder, headLabel, modelType, parentMod
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={[5, 10, 25]}
           sx={{
-            id: "table-pagination"
+            id: "table-pagination",
+            display: options?.hidePagination ? 'none' : undefined
           }}
         />
       </Card>

@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import type {UsersInterface} from "@components/interface";
 
-// ----------------------------------------------------------------------
+
 
 const MENU_OPTIONS = [
   {
@@ -31,7 +31,7 @@ const MENU_OPTIONS = [
   },
 ];
 
-// ----------------------------------------------------------------------
+
 
 export function AccountPopover({user}: { user: UsersInterface }): ReactNode {
   const [open, setOpen] = useState<EventTarget | null>(null);

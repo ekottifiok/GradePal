@@ -7,7 +7,7 @@ import type {ReactNode} from "react";
 import {RouterLink} from "@components/routes";
 import {Logo} from '@components/logo';
 
-// ----------------------------------------------------------------------
+
 
 // eslint-disable-next-line import/no-default-export -- next js requires this
 export default function NotFoundView(): ReactNode {

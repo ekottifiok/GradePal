@@ -3,7 +3,7 @@ import type { Shadows} from '@mui/material/styles';
 import { alpha } from '@mui/material/styles';
 import { grey } from './palette';
 
-// ----------------------------------------------------------------------
+
 
 export function shadows() : Shadows {
   const transparent1 = alpha(grey[500], 0.2);

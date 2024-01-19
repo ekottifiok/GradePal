@@ -1,6 +1,6 @@
 import {getSession, withPageAuthRequired} from '@auth0/nextjs-auth0';
 import type {ReactElement} from "react";
-import type { Metadata } from 'next'
+import type {Metadata} from 'next'
 import {getStudentResult} from '@lib/modelFunctions';
 import {getAllResults} from '@lib/modelFunctions/results';
 import {getUserAuth0} from "@components/utils";
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 // eslint-disable-next-line import/no-default-export -- required by Next.js
 export default withPageAuthRequired(
   async (): Promise<ReactElement> => Promise.all([getAllResults(), getUserAuth0(getSession())])
-    .then(async ([results, user]) => {
-      return user.isStaff ? <StaffPage results={results} /> :
-      <StudentPage results={await getStudentResult(user.matriculationNumber)}/>
-
+    .then(async ([allResults, user]) => {
+      return user.isStaff ? <StaffPage results={allResults}/> : (
+        <StudentPage data={await getStudentResult(user.matriculationNumber)}/>
+      )
     })
 )

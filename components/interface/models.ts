@@ -1,21 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- MergeType from mongoose is any */
-import type { Document, MergeType, Schema } from "mongoose";
+// noinspection JSUnusedGlobalSymbols
 
-export enum ReportOptions {
-  Created = 'Created',
-  Error = 'Error',
-}
+import type {Document, Schema} from "mongoose";
 
-export enum NotificationType {
-  Message = 0,
-  Upload = 1,
-}
+export enum ReportOptions {Created = 'Created', Error = 'Error'}
 
-export interface Report {
-  matriculationNumber: string;
-  status: ReportOptions;
-  description: string | MergeType<any, Omit<AllModels, "_id">>[];
-}
+export enum NotificationType { Message = 0, Upload = 1}
+
+export enum SemesterEnum {First = 1, Second = 2, Third = 3}
 
 export interface ResultJson {
   'Matriculation Number': string;
@@ -23,7 +15,7 @@ export interface ResultJson {
   'Score': string;
 }
 
-interface BaseDocument extends Document {
+export interface BaseDocument extends Document {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -37,6 +29,7 @@ export interface CUCourses {
   creditUnit: number;
   department: string;
   modifiedBy?: string;
+  semester: SemesterEnum;
   title: string;
 }
 
@@ -48,6 +41,7 @@ export interface Notification {
   type: NotificationType;
   action: "Pending" | "Done";
 }
+
 export interface ResultData {
   uploadedAt: Date;
   uploadedBy: string;
@@ -59,19 +53,13 @@ export interface ResultData {
   approved: boolean;
 }
 
-export interface ResultDataId extends ResultData{
-  _id: string
-}
-
-export interface StudentResultsTable extends ResultDataId {
-  courseTitle: string;
-  creditUnit: number;
+export interface StudentResultsTable extends Pick<BaseDocument, '_id'>, Pick<CUCourses, 'title' | 'creditUnit' | 'semester'>, ResultData {
 }
 
 export interface StudentResultResponse {
-  id: string;
-  session?: string;
-  results: StudentResultsTable[]
+  cgpa: string;
+  sessionArray: string[];
+  results: StudentResultsTable[];
 }
 
 export interface GetStudentResultParameter {
@@ -94,9 +82,11 @@ export interface CUUsers {
   staffRole?: string;
 }
 
-export interface CoursesInterface extends CUCourses, BaseDocument { }
+export interface CoursesInterface extends CUCourses, BaseDocument {
+}
 
-export interface ResultsInterface extends CUResults, BaseDocument { }
+export interface ResultsInterface extends CUResults, BaseDocument {
+}
 
 export interface UsersInterface extends CUUsers, BaseDocument {
   isLoggedInBefore: boolean;
@@ -111,4 +101,10 @@ export enum AllModelsEnum {
   Courses = 'Courses',
   Results = 'Results',
   Users = 'Users',
+}
+
+export interface ReportInterface {
+  models: AllModelsEnum,
+  status: ReportOptions,
+  extra: any
 }

@@ -2,7 +2,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import type {ReactNode} from "react";
 
-// ----------------------------------------------------------------------
+
 
 export function TableEmptyRows({ emptyRows, height }: {
     emptyRows: number, height: number

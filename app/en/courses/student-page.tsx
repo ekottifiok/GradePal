@@ -7,7 +7,7 @@ import React from "react";
 export function StudentPage(): ReactNode {
   return (
     <Box>
-      <Typography variant='h4'>Courses</Typography>
+      <Typography variant='h3'>Courses</Typography>
 
     </Box>
   )

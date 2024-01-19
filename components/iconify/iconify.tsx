@@ -1,10 +1,10 @@
 "use client"
-import type {ReactNode} from "react";
-import {forwardRef} from 'react';
-import {Icon} from '@iconify/react';
+import type { ReactNode } from "react";
+import { forwardRef } from 'react';
+import { Icon } from '@iconify/react';
 import Box from '@mui/material/Box';
 
-// ----------------------------------------------------------------------
+
 
 interface IconifyInterface {
   icon: string;
@@ -15,17 +15,17 @@ interface IconifyInterface {
 
 export const Iconify = forwardRef<HTMLElement, IconifyInterface>(
   function IconifyRender({
-                           className,
-                           icon,
-                           width = '20',
-                           sx, ...other}, ref): ReactNode {
+    className,
+    icon,
+    width = '30',
+    sx, ...other }, ref): ReactNode {
     return (
       <Box
         className={`component-iconify ${className}`}
         component={Icon}
         icon={icon}
         ref={ref}
-        sx={{width, height: parseInt(width), ...sx}}
+        sx={{ width, height: parseInt(width), ...sx }}
         {...other}
       />
     )

@@ -1,3 +1,4 @@
+"use client"
 import {AppBar, Box, IconButton, Stack, Toolbar,} from '@mui/material';
 import {useTheme} from '@mui/material/styles';
 import type {ReactNode} from "react";
@@ -10,8 +11,7 @@ import {HEADER, DRAWER_WIDTH} from '@components/constants';
 import {AccountPopover, LanguagePopover, NotificationsPopover, Searchbar,} from './common';
 
 export function Header({onOpenNav, user}: {
-  onOpenNav: () => void,
-  user: UsersInterface
+  onOpenNav: () => void, user: UsersInterface
 }): ReactNode {
 
   const theme: Theme = useTheme();

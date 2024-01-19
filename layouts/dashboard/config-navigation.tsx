@@ -2,11 +2,10 @@ import type {ReactNode} from "react";
 import {SvgColor} from '@components/svg-color';
 import {IMAGE_PATH} from "@components/constants";
 import type {NavConfig} from "@components/interface";
-
-// ----------------------------------------------------------------------
+import {ViewPermissionEnum} from "@components/interface/dashboard";
 
 const icon = (name: string): ReactNode => (
-  <SvgColor src={IMAGE_PATH.concat(`icons/navbar/${name}.svg`)} sx={{ width: 1, height: 1 }} />
+  <SvgColor src={IMAGE_PATH.concat(`icons/navbar/${name}.svg`)} sx={{width: 1, height: 1}}/>
 );
 
 export const navConfig: NavConfig[] = [
@@ -19,7 +18,7 @@ export const navConfig: NavConfig[] = [
     title: 'courses',
     path: '/en/courses',
     icon: icon('ic_courses'),
-    viewPermission: 'Staff'
+    viewPermission: ViewPermissionEnum.Staff
   },
   {
     title: 'results',
@@ -30,12 +29,13 @@ export const navConfig: NavConfig[] = [
     title: 'students',
     path: '/en/students',
     icon: icon('ic_students'),
-    viewPermission: 'Staff'
+    viewPermission: ViewPermissionEnum.Staff
   },
   {
     title: 'profile',
     path: '/en/profile',
     icon: icon('ic_user'),
+    viewPermission: ViewPermissionEnum.Student
   },
   {
     title: 'settings',

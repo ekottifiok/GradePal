@@ -10,20 +10,14 @@ import { overrides } from './overrides';
 import { typography } from './typography';
 import { customShadows as customShadowsFunc } from './custom-shadows';
 
-// ----------------------------------------------------------------------
-
-const palette = paletteFunc();
-const shadows = shadowsFunc();
-const customShadows = customShadowsFunc()
-
 export function ThemeProvider({ children }: {children: ReactNode}): ReactNode {
 
   const memoizedValue = useMemo<ThemeOptions>(
     ()  => ({
-      palette,
+      palette: paletteFunc(),
       typography,
-      shadows,
-      customShadows,
+      shadows: shadowsFunc(),
+      customShadows: customShadowsFunc(),
       shape: { borderRadius: 8 },
     }),
     []

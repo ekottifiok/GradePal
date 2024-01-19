@@ -24,7 +24,7 @@ export default withPageAuthRequired(
       return (
         <Box>
           <Stack sx={{mb: 5}}>
-            <Typography variant='h4'>
+            <Typography variant='h3'>
               {greeting} {user.name}
             </Typography>
             <Typography>

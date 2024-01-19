@@ -4,7 +4,7 @@ import {getUserAuth0, Redirect} from "@components/utils";
 import type {UserClaims} from "@components/interface";
 import {CSRPage} from './csr-page';
 
-// ----------------------------------------------------------------------
+
 
 // eslint-disable-next-line import/no-default-export -- required by Next.js
 export default withPageAuthRequired(

@@ -15,6 +15,7 @@ import {
   DialogTitle,
   FormControl,
   InputLabel,
+  Link,
   MenuItem,
   Select,
   Stack,
@@ -22,6 +23,7 @@ import {
 } from '@mui/material'
 import type {ReactNode} from 'react';
 import React, {useState} from 'react';
+import { RouterLink } from "@components/routes";
 import {Iconify} from '@components/iconify';
 import {HandleTable} from '@layouts/table';
 import type {FormAlert, ResultsInterface} from "@components/interface";
@@ -116,7 +118,7 @@ export function StaffPage({ results }: {results: ResultsInterface[]}): ReactNode
   return (
     <Box>
       <Stack alignItems='center' direction='row' justifyContent='space-between' mb={5}>
-        <Typography variant='h4'>Results</Typography>
+        <Typography variant='h3'>Results</Typography>
 
         <Button
           aria-haspopup="true"
@@ -148,7 +150,7 @@ export function StaffPage({ results }: {results: ResultsInterface[]}): ReactNode
           <DialogContentText>
             Please fill this form, upload an excel result sheet and submit to add results.
             Note this is to add a multiple result and it should follow the accepted format.
-            To view the format click <a href="/format">here</a>.
+            To view the format click <Link component={RouterLink} href="format" underline="none">here</Link>.
           </DialogContentText>
           <Stack spacing={3}>
             {

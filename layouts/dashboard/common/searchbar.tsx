@@ -11,7 +11,7 @@ import { BgBlur } from '@components/theme';
 import {Iconify} from '@components/iconify';
 import type {Theme} from '@components/interface/theme'
 
-// ----------------------------------------------------------------------
+
 
 const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;
@@ -34,7 +34,7 @@ const StyledSearchbar = styled('div')(({ theme }: {theme: Theme}) => ({
   },
 }));
 
-// ----------------------------------------------------------------------
+
 
 export function Searchbar({theme}:{theme: Theme}): ReactNode {
   const [isSearchBarOpen, setIsSearchBarOpen] = useState<boolean>(false);

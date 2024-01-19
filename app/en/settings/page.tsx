@@ -13,7 +13,7 @@ export default withPageAuthRequired(
   async () => getUserAuth0(getSession())
     .then(() => (
       <Box>
-        <Typography variant='h4'>Settings</Typography>
+        <Typography variant='h3'>Settings</Typography>
         <CsrPage/>
       </Box>
     ))

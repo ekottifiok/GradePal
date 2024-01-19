@@ -3,9 +3,6 @@ import {alpha} from '@mui/material/styles';
 import { outlinedInputClasses } from '@mui/material';
 import type {Theme} from "@components/interface";
 
-
-// ----------------------------------------------------------------------
-
 export const overrides = (theme: Theme):  Components => ({
   MuiCssBaseline: {
     styleOverrides: {

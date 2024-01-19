@@ -12,6 +12,7 @@ export interface ResultQueueParameter {
 type CoursesBulk = AnyBulkWriteOperation<CoursesInterface>;
 type ResultsBulk = AnyBulkWriteOperation<ResultsInterface>;
 type UsersBulk = AnyBulkWriteOperation<UsersInterface>;
+
 export interface BulkWrite {
   courses: CoursesBulk,
   results: ResultsBulk,
