@@ -9,6 +9,7 @@ import {createArrayOfResults} from "@lib/modelFunctions";
 import type {
   BulkWriteArray,
   CoursesInterface,
+  ReportInterface,
   ResultQueueParameter,
   ResultsInterface,
   UsersInterface
@@ -21,7 +22,7 @@ export const ResultQueue = Queue<ResultQueueParameter>(
   "api/queues/results", // 👈 the route it's reachable on
   async (job, {id}) => {
     const {department, session, url, uploadedAt, uploadedBy} = job;
-    const report: { models: AllModelsEnum, status: ReportOptions, extra: any }[] = [];
+    const report: ReportInterface[] = [];
     const bulkWrite: BulkWriteArray = {courses: [], results: [], users: [], error: []};
 
     await fetch(url).then(async (result) => result.arrayBuffer())

@@ -22,7 +22,7 @@ export type {
   Notification,
   ResultData,
   ResultsInterface,
-  Report,
+  ReportInterface,
   ResultJson,
   StudentResultResponse,
   StudentResultsTable,

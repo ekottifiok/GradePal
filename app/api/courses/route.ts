@@ -47,15 +47,22 @@ export const PATCH = withApiAuthRequired(
   async (req): Promise<NextResponse<ResponseReply>> => {
   return Promise.all([req.json(), getUserAuth0(getSession(req, new NextResponse()))])
     .then(([inputData, user]) => {
-      const {id, courseCode, creditUnit, title} = inputData as {
-        id?: string, courseCode?: string, creditUnit?: string, title?: string
+      const {id, courseCode, creditUnit, title, semester} = inputData as {
+        id?: string, courseCode?: string, creditUnit?: string, title?: string, semester?: string
       }
       const {department, name} = user
-      const creditUnitInt = creditUnit ? parseInt(creditUnit, 10) : undefined;
-      if (!id || !courseCode || !creditUnit || !title || !creditUnitInt || !department) {
-        return NextResponse.json({error: {FormDataFailure: "id is missing in the form"}}, {status: 500});
+
+      if (!id || !courseCode || !creditUnit || !title || !semester || !department) {
+        return NextResponse.json({error: {FormDataFailure: "FormData is incomplete"}}, {status: 500});
       }
-      return modifyCourse(id, {creditUnit: creditUnitInt, courseCode, title, modifiedBy: name, department})
+
+      const creditUnitInt = parseInt(creditUnit, 10);
+      const semesterInt = parseInt(semester, 10)
+
+      if(isNaN(creditUnitInt) || isNaN(semesterInt)) {
+        return NextResponse.json({error: {FormDataFailure: "Could not parse semester or credit unit"}}, {status: 500});
+      }
+      return modifyCourse(id, {creditUnit: creditUnitInt, courseCode, title, semester: semesterInt, modifiedBy: name, department})
         .then(() => NextResponse.json<ResponseReply>({message: "Updated Successfully"}, {status: 200}))
         .catch((_error) => NextResponse.json<ResponseReply>({error: {DatabaseError: "Failed to modify data"}}, {status: 500})
         )
@@ -69,13 +76,11 @@ export const POST = withApiAuthRequired(async (req) => (
 
 
       const {name, department} = user;
-      const {courseCode, creditUnit, title} = inputData as {
-        courseCode?: string,
-        creditUnit?: string,
-        title?: string
+      const {courseCode, creditUnit, semester, title} = inputData as {
+        courseCode?: string, creditUnit?: string, semester?:string, title?: string
       }
-      const creditUnitInt = creditUnit ? parseInt(creditUnit, 10) : undefined;
-      if (!courseCode || !creditUnit || !title || !creditUnitInt) {
+
+      if (!courseCode || !creditUnit || !title) {
         return NextResponse.json<ResponseReply>(
           {error: {FormDataFailure: "Form not filled completely"}},
           {status: 500}
@@ -89,8 +94,17 @@ export const POST = withApiAuthRequired(async (req) => (
         )
       }
 
+      if (!semester) {
+        return NextResponse.json(
+          {error: {FormDataFailure: "Semester lacking on your information"}},
+          {status: 500}
+        )
+      }
 
-      return createCourse({courseCode, creditUnit: creditUnitInt, title, createdBy: name, department})
+      const creditUnitInt = parseInt(creditUnit, 10);
+      const semesterInt = parseInt(semester, 10)
+
+      return createCourse({courseCode, creditUnit: creditUnitInt, title, createdBy: name, department, semester: semesterInt})
         .then(() => NextResponse.json({
           message: {
             success: "Course created successfully"

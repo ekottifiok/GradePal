@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- MergeType from mongoose is any */
 // noinspection JSUnusedGlobalSymbols
 
-import type {Document, MergeType, Schema} from "mongoose";
+import type {Document, Schema} from "mongoose";
 
 export enum ReportOptions {Created = 'Created', Error = 'Error'}
 
 export enum NotificationType { Message = 0, Upload = 1}
 
 export enum SemesterEnum {First = 1, Second = 2, Third = 3}
-
-export interface Report {
-  matriculationNumber: string;
-  status: ReportOptions;
-  description: string | MergeType<any, Omit<AllModels, "_id">>[];
-}
 
 export interface ResultJson {
   'Matriculation Number': string;
@@ -107,4 +101,10 @@ export enum AllModelsEnum {
   Courses = 'Courses',
   Results = 'Results',
   Users = 'Users',
+}
+
+export interface ReportInterface {
+  models: AllModelsEnum,
+  status: ReportOptions,
+  extra: any
 }
