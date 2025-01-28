@@ -56,7 +56,7 @@ export default function NotFoundView(): ReactNode {
 
           <Box
             component="img"
-            src="/assets/illustrations/illustration_404.svg"
+            src="/illustrations/illustration_404.svg"
             sx={{
               mx: 'auto',
               height: 260,

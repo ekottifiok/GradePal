@@ -27,7 +27,7 @@ export const Paper = ({ bgcolor, dropdown }: PaperInterface): {
       color: bgcolor,
     }),
   }),
-  backgroundImage: 'url(/assets/cyan-blur.png), url(/assets/red-blur.png)',
+  backgroundImage: 'url(/cyan-blur.png), url(/red-blur.png)',
   backgroundRepeat: 'no-repeat, no-repeat',
   backgroundPosition: 'top right, left bottom',
   backgroundSize: '50%, 50%',

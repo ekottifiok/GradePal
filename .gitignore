@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+
 .env*.local
 
 # vercel
@@ -36,5 +37,5 @@ yarn-error.log*
 next-env.d.ts
 .idea/
 app/favicon.ico
-/pnpm-lock.yaml
+*lock*
 /public/results-report/
