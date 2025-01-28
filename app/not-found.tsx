@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import type {ReactNode} from "react";
 import {RouterLink} from "@components/routes";
 import {Logo} from '@components/logo';
+import { IMAGE_PATH } from '@components/constants';
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +57,7 @@ export default function NotFoundView(): ReactNode {
 
           <Box
             component="img"
-            src="/illustrations/illustration_404.svg"
+            src={IMAGE_PATH.concat("illustrations/illustration_404.svg")}
             sx={{
               mx: 'auto',
               height: 260,

@@ -12,7 +12,7 @@ export async function createUser(data: CUUsers, isStaff?: boolean, isSignedUp?: 
     ...data,
     isStaff,
     isSignedUp,
-    picture: data.picture || `/images/avatars/avatar_${randomNumber}.jpg`
+    picture: data.picture || `images/avatars/avatar_${randomNumber}.jpg`
   })
 }
 

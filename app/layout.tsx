@@ -18,13 +18,13 @@ export default function RootLayout({children}: { children: ReactNode }): ReactNo
     <html lang='en'>
     <head>
       <link href={IMAGE_PATH.concat('favicon/favicon.ico')} rel='icon' sizes='any'/>
-      <link href={IMAGE_PATH.concat('/favicon-16x16.png')} rel='icon'
+      <link href={IMAGE_PATH.concat('favicon-16x16.png')} rel='icon'
             sizes='16x16'
             type='image/png'/>
       <link href={IMAGE_PATH.concat('favicon/favicon-32x32.png')} rel='icon'
             sizes='32x32'
             type='image/png'/>
-      <link href={IMAGE_PATH.concat('/app/apple-icon.png')}
+      <link href={IMAGE_PATH.concat('app/apple-icon.png')}
             rel='apple-touch-icon'
             sizes='180x180'
             type='image/png'/>

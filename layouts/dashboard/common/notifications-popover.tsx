@@ -20,11 +20,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import { fToNow } from '@components/utils/format-time';
 import {Iconify} from '@components/iconify';
 import {Scrollbar} from '@components/scrollbar';
+import { IMAGE_PATH } from '@components/constants';
 
 // ----------------------------------------------------------------------
 
 interface Notification {
-  avatar: string | null,
+  avatar?: string,
   createdAt: Date;
   description: string;
   id: string;
@@ -33,56 +34,63 @@ interface Notification {
   type: string;
 }
 
-const NOTIFICATIONS: Notification[] = [
-  {
-    id: faker.string.uuid(),
-    title: 'Your order is placed',
-    description: 'waiting for shipping',
-    avatar: null,
-    type: 'order_placed',
-    createdAt: set(new Date(), { hours: 10, minutes: 30 }),
-    isUnRead: true,
-  },
-  {
-    id: faker.string.uuid(),
-    title: faker.person.fullName(),
-    description: 'answered to your comment on the Minimal',
-    avatar: '/images/avatars/avatar_2.jpg',
-    type: 'friend_interactive',
-    createdAt: sub(new Date(), { hours: 3, minutes: 30 }),
-    isUnRead: true,
-  },
-  {
-    id: faker.string.uuid(),
-    title: 'You have new message',
-    description: '5 unread messages',
-    avatar: null,
-    type: 'chat_message',
-    createdAt: sub(new Date(), { days: 1, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-  {
-    id: faker.string.uuid(),
-    title: 'You have new mail',
-    description: 'sent from Guido Pad berg',
-    avatar: null,
-    type: 'mail',
-    createdAt: sub(new Date(), { days: 2, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-  {
-    id: faker.string.uuid(),
-    title: 'Delivery processing',
-    description: 'Your order is being shipped',
-    avatar: null,
-    type: 'order_shipped',
-    createdAt: sub(new Date(), { days: 3, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-];
+
+
+const getNotifications = (): Notification[] => {
+  const notifications: Notification[] = [
+    {
+      id: faker.string.uuid(),
+      title: 'Your order is placed',
+      description: 'waiting for shipping',
+      type: 'order_placed',
+      createdAt: set(new Date(), { hours: 10, minutes: 30 }),
+      isUnRead: true,
+    },
+    {
+      id: faker.string.uuid(),
+      title: faker.person.fullName(),
+      description: 'answered to your comment on the Minimal',
+      avatar: '/assets/images/avatars/avatar_2.jpg',
+      type: 'friend_interactive',
+      createdAt: sub(new Date(), { hours: 3, minutes: 30 }),
+      isUnRead: true,
+    },
+    {
+      id: faker.string.uuid(),
+      title: 'You have new message',
+      description: '5 unread messages',
+      type: 'chat_message',
+      createdAt: sub(new Date(), { days: 1, hours: 3, minutes: 30 }),
+      isUnRead: false,
+    },
+    {
+      id: faker.string.uuid(),
+      title: 'You have new mail',
+      description: 'sent from Guido Pad berg',
+      type: 'mail',
+      createdAt: sub(new Date(), { days: 2, hours: 3, minutes: 30 }),
+      isUnRead: false,
+    },
+    {
+      id: faker.string.uuid(),
+      title: 'Delivery processing',
+      description: 'Your order is being shipped',
+      type: 'order_shipped',
+      createdAt: sub(new Date(), { days: 3, hours: 3, minutes: 30 }),
+      isUnRead: false,
+    },
+  ];
+  const randomNumber = Math.floor(Math.random() * 25);
+
+  notifications.forEach((value, _) => ({
+    ...value,
+    avatar: IMAGE_PATH.concat(`images/avatars/avatar_${randomNumber}.jpg`)
+  }))
+  return notifications
+}
 
 export function NotificationsPopover(): ReactNode {
-  const [notifications, setNotifications] = useState(NOTIFICATIONS);
+  const [notifications, setNotifications] = useState(getNotifications());
 
   const totalUnRead = notifications.filter((item) => item.isUnRead).length;
 
@@ -237,25 +245,25 @@ function renderContent(notification: Notification): {avatar: ReactNode, title: R
 
   if (notification.type === 'order_placed') {
     return {
-      avatar: <img alt={notification.title} src="/icons/ic_notification_package.svg" />,
+      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_package.svg" />,
       title,
     };
   }
   if (notification.type === 'order_shipped') {
     return {
-      avatar: <img alt={notification.title} src="/icons/ic_notification_shipping.svg" />,
+      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_shipping.svg" />,
       title,
     };
   }
   if (notification.type === 'mail') {
     return {
-      avatar: <img alt={notification.title} src="/icons/ic_notification_mail.svg" />,
+      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_mail.svg" />,
       title,
     };
   }
   if (notification.type === 'chat_message') {
     return {
-      avatar: <img alt={notification.title} src="/icons/ic_notification_chat.svg" />,
+      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_chat.svg" />,
       title,
     };
   }
