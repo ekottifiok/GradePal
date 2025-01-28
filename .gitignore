@@ -38,3 +38,5 @@ next-env.d.ts
 app/favicon.ico
 /pnpm-lock.yaml
 /public/results-report/
+
+*lock*
